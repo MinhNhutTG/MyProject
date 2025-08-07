@@ -1,27 +1,14 @@
-doctype html
-html(lang="vi")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Danh sách sản phẩm - Cửa hàng ABC
-    link(rel="stylesheet", href="/css/style.css")
-  body
-    header
-      nav.navbar
-        .container
-          a.logo(href="/") 🛒 Cửa hàng ABC
-          ul.nav-links
-            li: a(href="/") Trang chủ
-            li: a(href="/products") Sản phẩm
-            li: a(href="/lien-he") Liên hệ
-            li: a(href="/gio-hang") Giỏ hàng
+//- // Nhung layout defaute
+extends ../../layouts/default.pug    
+//- // Nhung mixin
+include ../../mixins/box-head.pug    
+block main
+  main
+  section.product-listing
+      .container
+        +box-head("Danh sách sản phẩm")
 
-    main
-      section.product-listing
-        .container
-          h1 Danh sách sản phẩm
-
-          .filters
+        .filters
             form(method="GET", action="/san-pham")
               input(type="text", name="search", placeholder="Tìm kiếm sản phẩm...")
               select(name="category")
@@ -31,7 +18,7 @@ html(lang="vi")
                 option(value="tui") Túi xách
               button(type="submit") Lọc
 
-          .product-grid
+        .product-grid
             // Sản phẩm 1
             .product-card
               img(src="/images/ao-so-mi.jpg", alt="Áo sơ mi trắng")
@@ -87,7 +74,3 @@ html(lang="vi")
               h3 Nón lưỡi trai
               p 120.000₫
               a.btn(href="/san-pham/8") Xem chi tiết
-
-    footer
-      .container
-        p © 2025 Cửa hàng ABC. All rights reserved.
