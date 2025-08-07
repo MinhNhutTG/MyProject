@@ -1,0 +1,93 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Danh sách sản phẩm - Cửa hàng ABC
+    link(rel="stylesheet", href="/css/style.css")
+  body
+    header
+      nav.navbar
+        .container
+          a.logo(href="/") 🛒 Cửa hàng ABC
+          ul.nav-links
+            li: a(href="/") Trang chủ
+            li: a(href="/products") Sản phẩm
+            li: a(href="/lien-he") Liên hệ
+            li: a(href="/gio-hang") Giỏ hàng
+
+    main
+      section.product-listing
+        .container
+          h1 Danh sách sản phẩm
+
+          .filters
+            form(method="GET", action="/san-pham")
+              input(type="text", name="search", placeholder="Tìm kiếm sản phẩm...")
+              select(name="category")
+                option(value="") -- Tất cả danh mục --
+                option(value="ao") Áo
+                option(value="giay") Giày
+                option(value="tui") Túi xách
+              button(type="submit") Lọc
+
+          .product-grid
+            // Sản phẩm 1
+            .product-card
+              img(src="/images/ao-so-mi.jpg", alt="Áo sơ mi trắng")
+              h3 Áo sơ mi trắng
+              p 200.000₫
+              a.btn(href="/san-pham/1") Xem chi tiết
+
+            // Sản phẩm 2
+            .product-card
+              img(src="/images/giay-sneaker.jpg", alt="Giày sneaker")
+              h3 Giày sneaker
+              p 750.000₫
+              a.btn(href="/san-pham/2") Xem chi tiết
+
+            // Sản phẩm 3
+            .product-card
+              img(src="/images/tui-deo.jpg", alt="Túi đeo chéo")
+              h3 Túi đeo chéo
+              p 320.000₫
+              a.btn(href="/san-pham/3") Xem chi tiết
+
+            // Sản phẩm 4
+            .product-card
+              img(src="/images/ao-khoac.jpg", alt="Áo khoác jeans")
+              h3 Áo khoác jeans
+              p 400.000₫
+              a.btn(href="/san-pham/4") Xem chi tiết
+
+            // Sản phẩm 5
+            .product-card
+              img(src="/images/quan-jeans.jpg", alt="Quần jeans nam")
+              h3 Quần jeans nam
+              p 350.000₫
+              a.btn(href="/san-pham/5") Xem chi tiết
+
+            // Sản phẩm 6
+            .product-card
+              img(src="/images/mu-len.jpg", alt="Mũ len mùa đông")
+              h3 Mũ len mùa đông
+              p 90.000₫
+              a.btn(href="/san-pham/6") Xem chi tiết
+
+            // Sản phẩm 7
+            .product-card
+              img(src="/images/ba-lo.jpg", alt="Ba lô laptop")
+              h3 Ba lô laptop
+              p 450.000₫
+              a.btn(href="/san-pham/7") Xem chi tiết
+
+            // Sản phẩm 8
+            .product-card
+              img(src="/images/non.jpg", alt="Nón lưỡi trai")
+              h3 Nón lưỡi trai
+              p 120.000₫
+              a.btn(href="/san-pham/8") Xem chi tiết
+
+    footer
+      .container
+        p © 2025 Cửa hàng ABC. All rights reserved.

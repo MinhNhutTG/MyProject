@@ -1,0 +1,61 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Trang chủ - Cửa hàng ABC
+    link(rel="stylesheet", href="/css/style.css")
+  body
+    header
+      nav.navbar
+        .container
+          a.logo(href="/") 🛒 Cửa hàng ABC
+          ul.nav-links
+            li: a(href="/") Trang chủ
+            li: a(href="/products") Sản phẩm
+            li: a(href="/lien-he") Liên hệ
+            li: a(href="/gio-hang") Giỏ hàng
+
+    main
+      section.banner
+        .container
+          h1 Chào mừng đến với Cửa hàng ABC!
+          p Mua sắm thỏa thích với giá tốt, chất lượng cao.
+          a.btn(href="/san-pham") Xem tất cả sản phẩm
+
+      section.products
+        .container
+          h2 Sản phẩm nổi bật
+
+          .product-grid
+            // Sản phẩm 1
+            .product-card
+              img(src="/images/ao-thun.jpg", alt="Áo thun nam")
+              h3 Áo thun nam
+              p 150.000₫
+              a.btn(href="/san-pham/101") Xem chi tiết
+
+            // Sản phẩm 2
+            .product-card
+              img(src="/images/giay.jpg", alt="Giày thể thao")
+              h3 Giày thể thao
+              p 500.000₫
+              a.btn(href="/san-pham/102") Xem chi tiết
+
+            // Sản phẩm 3
+            .product-card
+              img(src="/images/tui.jpg", alt="Túi xách nữ")
+              h3 Túi xách nữ
+              p 350.000₫
+              a.btn(href="/san-pham/103") Xem chi tiết
+
+            // Sản phẩm 4
+            .product-card
+              img(src="/images/ao-khoac.jpg", alt="Áo khoác nam")
+              h3 Áo khoác nam
+              p 420.000₫
+              a.btn(href="/san-pham/104") Xem chi tiết
+
+    footer
+      .container
+        p © 2025 Cửa hàng ABC. All rights reserved.
