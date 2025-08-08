@@ -1,0 +1,69 @@
+extends ../../layouts/default.pug
+block main
+  .container.my-4
+    // Thanh tìm kiếm & lọc
+    .row.mb-3
+      .col-md-6
+        input.form-control(
+          placeholder="Tìm sản phẩm..." 
+          type="text"
+          )
+      .col-md-4
+        select.form-select
+          option(value="") Tất cả danh mục
+          option Áo
+          option Quần
+          option Phụ kiện
+      .col-md-2
+        button.btn.btn-primary.w-100
+          i.fas.fa-search
+          | Tìm
+    // Bảng sản phẩm
+    .card.shadow
+      .card-body
+        table.table.table-hover.align-middle
+          thead.table-dark
+            tr
+              th Ảnh
+              th Tên sản phẩm
+              th Giá
+              th Tồn kho
+              th Trạng thái
+              th Hành động
+          tbody
+            each item in productsList
+              tr
+                td
+                  img.rounded.img-fluid(
+                    alt="product" 
+                    src=`${item.thumbnail}`
+                    style="height:50px; width:50px"
+                    )
+                td #{item.title}
+                td #{item.price}$
+                td #{item.quanlity} Cái
+                td
+                  if ( item.quanlity > 0)
+                    span.badge.bg-success Còn hàng
+                  else 
+                    span.badge.bg-warning Hết hàng
+                td
+                  a.btn.btn-warning.btn-sm(href="#")
+                    i.fas.fa-edit
+                  a.btn.btn-danger.btn-sm(href="#")
+                    i.fas.fa-trash
+            
+            
+        // Phân trang
+        nav
+          ul.pagination.justify-content-center
+            li.page-item.disabled
+              a.page-link(href="#") «
+            li.page-item.active
+              a.page-link(href="#") 1
+            li.page-item
+              a.page-link(href="#") 2
+            li.page-item
+              a.page-link(href="#") 3
+            li.page-item
+              a.page-link(href="#") »

@@ -1,0 +1,56 @@
+extends ../../layouts/default.pug
+block main
+  .flex-grow-1.p-4
+          h2 📊 Bảng điều khiển
+          // Stats Cards
+          .row.my-4
+            .col-md-3
+              .card.text-center.shadow
+                .card-body
+                  h5.card-title Doanh thu
+                  p.fs-4.text-success 25,000,000₫
+            .col-md-3
+              .card.text-center.shadow
+                .card-body
+                  h5.card-title Sản phẩm
+                  p.fs-4 120
+            .col-md-3
+              .card.text-center.shadow
+                .card-body
+                  h5.card-title Đơn hàng
+                  p.fs-4 320
+            .col-md-3
+              .card.text-center.shadow
+                .card-body
+                  h5.card-title Khách hàng
+                  p.fs-4 150
+          // Recent Orders
+          .card.shadow.mt-4
+            .card-header.bg-primary.text-white Đơn hàng gần đây
+            .card-body
+              table.table.table-hover
+                thead
+                  tr
+                    th Mã đơn
+                    th Khách hàng
+                    th Tổng tiền
+                    th Ngày
+                    th Trạng thái
+                tbody
+                  tr
+                    td #001
+                    td Nguyễn Văn A
+                    td 500,000₫
+                    td 08/08/2025
+                    td
+                      span.badge.bg-success Hoàn thành
+                  tr
+                    td #002
+                    td Trần Thị B
+                    td 750,000₫
+                    td 08/08/2025
+                    td
+                      span.badge.bg-warning Đang xử lý
+        
+  script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js")
+  script(src="js/script.js")
