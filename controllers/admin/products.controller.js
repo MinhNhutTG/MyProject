@@ -20,6 +20,8 @@ module.exports.index = async (req, res) => {
         }
     ]
 
+    
+
     if (req.query.status){
         const index = fillerButton.findIndex((btn)=>btn.status == req.query.status);
         fillerButton[index].class = "btn-success";
@@ -33,8 +35,13 @@ module.exports.index = async (req, res) => {
         deleted: false,
     }
 
+    
     if (req.query.status){
         find.status = req.query.status;
+    }
+
+    if (req.query.keyword){
+        find.title = { $regex: req.query.keyword, $options: "i" };
     }
 
     const products = await Prodcut.find(find);

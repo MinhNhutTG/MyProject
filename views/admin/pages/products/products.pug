@@ -3,28 +3,30 @@ block main
   .container.my-4
     // Thanh tìm kiếm & lọc
     .row.mb-3
-      .col-md-3
-        input.form-control(
-          placeholder="Tìm sản phẩm..." 
-          type="text"
-          )
       .col-md-4 
-        .btn-group(role="group")
-            each btn in fillerButton
-              button.btn.btn-filler-status(type="button" btn-status=`${btn.status}` class=`${btn.class}` ) #{btn.name}
-            
+              .btn-group(role="group")
+                  each btn in fillerButton
+                    button.btn.btn-filler-status( btn-status=`${btn.status}` class=`${btn.class}`  ) #{btn.name}
+      .col-md-5
+        form.d-flex(id="formSearch")
+          input.form-control(
+            placeholder="Tìm sản phẩm..." 
+            type="text"
+            name="keyword"
+            )
+          button.btn.btn-primary.w-25(type="submit")
+            i.fas.fa-search
+            | Tìm
+      
 
-        
       .col-md-3
         select.form-select
           option(value="") Tất cả danh mục
           option Áo
           option Quần
           option Phụ kiện
-      .col-md-2
-        button.btn.btn-primary.w-100
-          i.fas.fa-search
-          | Tìm
+      
+        
     // Bảng sản phẩm
     .card.shadow
       .card-body
