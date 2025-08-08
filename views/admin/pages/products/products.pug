@@ -3,12 +3,19 @@ block main
   .container.my-4
     // Thanh tìm kiếm & lọc
     .row.mb-3
-      .col-md-6
+      .col-md-3
         input.form-control(
           placeholder="Tìm sản phẩm..." 
           type="text"
           )
-      .col-md-4
+      .col-md-4 
+        .btn-group(role="group")
+            each btn in fillerButton
+              button.btn.btn-filler-status(type="button" btn-status=`${btn.status}` class=`${btn.class}` ) #{btn.name}
+            
+
+        
+      .col-md-3
         select.form-select
           option(value="") Tất cả danh mục
           option Áo
