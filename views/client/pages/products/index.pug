@@ -20,57 +20,11 @@ block main
 
         .product-grid
             // Sản phẩm 1
-            .product-card
-              img(src="/images/ao-so-mi.jpg", alt="Áo sơ mi trắng")
-              h3 Áo sơ mi trắng
-              p 200.000₫
-              a.btn(href="/san-pham/1") Xem chi tiết
+            each item in products
+              .product-card
+                img(src=`${item.thumbnail}`, alt="Áo sơ mi trắng")
+                h3 #{item.title}
+                p #{item.price}$
+                a.btn(href="/san-pham/1") Xem chi tiết
 
-            // Sản phẩm 2
-            .product-card
-              img(src="/images/giay-sneaker.jpg", alt="Giày sneaker")
-              h3 Giày sneaker
-              p 750.000₫
-              a.btn(href="/san-pham/2") Xem chi tiết
-
-            // Sản phẩm 3
-            .product-card
-              img(src="/images/tui-deo.jpg", alt="Túi đeo chéo")
-              h3 Túi đeo chéo
-              p 320.000₫
-              a.btn(href="/san-pham/3") Xem chi tiết
-
-            // Sản phẩm 4
-            .product-card
-              img(src="/images/ao-khoac.jpg", alt="Áo khoác jeans")
-              h3 Áo khoác jeans
-              p 400.000₫
-              a.btn(href="/san-pham/4") Xem chi tiết
-
-            // Sản phẩm 5
-            .product-card
-              img(src="/images/quan-jeans.jpg", alt="Quần jeans nam")
-              h3 Quần jeans nam
-              p 350.000₫
-              a.btn(href="/san-pham/5") Xem chi tiết
-
-            // Sản phẩm 6
-            .product-card
-              img(src="/images/mu-len.jpg", alt="Mũ len mùa đông")
-              h3 Mũ len mùa đông
-              p 90.000₫
-              a.btn(href="/san-pham/6") Xem chi tiết
-
-            // Sản phẩm 7
-            .product-card
-              img(src="/images/ba-lo.jpg", alt="Ba lô laptop")
-              h3 Ba lô laptop
-              p 450.000₫
-              a.btn(href="/san-pham/7") Xem chi tiết
-
-            // Sản phẩm 8
-            .product-card
-              img(src="/images/non.jpg", alt="Nón lưỡi trai")
-              h3 Nón lưỡi trai
-              p 120.000₫
-              a.btn(href="/san-pham/8") Xem chi tiết
+            
