@@ -13,6 +13,7 @@ block main
             placeholder="Tìm sản phẩm..." 
             type="text"
             name="keyword"
+            value= keyword
             )
           button.btn.btn-primary.w-25(type="submit")
             i.fas.fa-search
@@ -53,9 +54,9 @@ block main
                 td #{item.quanlity} Cái
                 td
                   if ( item.quanlity > 0)
-                    span.badge.bg-success Còn hàng
+                    span.badge.bg-success Hoạt động
                   else 
-                    span.badge.bg-warning Hết hàng
+                    span.badge.bg-warning Ngưng hoạt động 
                 td
                   a.btn.btn-warning.btn-sm(href="#")
                     i.fas.fa-edit
