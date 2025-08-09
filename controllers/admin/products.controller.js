@@ -40,13 +40,16 @@ module.exports.index = async (req, res) => {
         find.status = req.query.status;
     }
 
+    let keyword = "";
     if (req.query.keyword){
-        find.title = { $regex: req.query.keyword, $options: "i" };
+        keyword=req.query.keyword;
+        find.title = { $regex: keyword, $options: "i" };
     }
 
     const products = await Prodcut.find(find);
     res.render("./admin/pages/products/products.pug",{
         productsList:products,
-        fillerButton:fillerButton
+        fillerButton:fillerButton,
+        keyword: keyword,
     });
 }
