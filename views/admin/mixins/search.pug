@@ -1,0 +1,11 @@
+mixin searchForm(keyword)
+  form.d-flex(id="formSearch")
+          input.form-control(
+            placeholder="Tìm sản phẩm..." 
+            type="text"
+            name="keyword"
+            value= keyword
+            )
+          button.btn.btn-primary.w-25(type="submit")
+            i.fas.fa-search
+            | Tìm
