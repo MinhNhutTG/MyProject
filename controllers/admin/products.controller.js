@@ -1,7 +1,9 @@
 // [GET] admin/products
-const Prodcut = require("../../models/product.model");
+const Product = require("../../models/product.model");
 const helperFillterStatus = require("../../helpers/fillterStatus");
 const helperSearch = require("../../helpers/search");
+const helperPagination = require("../../helpers/pagination");
+const pagination = require("../../helpers/pagination");
 
 module.exports.index = async (req, res) => {
 
@@ -21,10 +23,23 @@ module.exports.index = async (req, res) => {
         find.title = objectSearch.regex;
     }
 
-    const products = await Prodcut.find(find);
+    const totalProduct = await Product.countDocuments(find)
+
+    let objectPagination = helperPagination(
+        {
+        currentIndex:1,
+        litmitProduct:8,
+        totalProduct:totalProduct,
+        },
+        req.query
+    ) 
+
+    const products = await Product.find(find).limit(objectPagination.litmitProduct).skip(objectPagination.skip);
     res.render("./admin/pages/products/products.pug",{
         productsList:products,
         fillerButton:fillterStatus,
         keyword: objectSearch.keyword,
+        pagination:objectPagination
+        
     });
 }

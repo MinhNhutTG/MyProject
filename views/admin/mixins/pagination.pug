@@ -1,0 +1,11 @@
+mixin pagination(pagination)
+  nav
+          ul.pagination.justify-content-center
+            li.page-item
+              if(pagination.currentIndex > 1)
+                .page-link( btn-pagination=(pagination.currentIndex-1) ) «
+              - for (let i = 1; i <= pagination.totalPage; i++)
+                li.page-item(class=(pagination.currentIndex == i ? "active" : "" ))
+                  a.page-link(href="#" btn-pagination=i ) #{i}
+              if(pagination.currentIndex < pagination.totalPage)
+                .page-link( btn-pagination=(Number(pagination.currentIndex) + 1)) »

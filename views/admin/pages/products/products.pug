@@ -1,6 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/fillterStatus.pug
 include ../../mixins/search.pug
+include ../../mixins/pagination.pug
 block main
   .container.my-4
     // Thanh tìm kiếm & lọc
@@ -17,8 +18,6 @@ block main
           option Áo
           option Quần
           option Phụ kiện
-      
-        
     // Bảng sản phẩm
     .card.shadow
       .card-body
@@ -55,16 +54,5 @@ block main
                     i.fas.fa-trash
             
             
-        // Phân trang
-        nav
-          ul.pagination.justify-content-center
-            li.page-item.disabled
-              a.page-link(href="#") «
-            li.page-item.active
-              a.page-link(href="#") 1
-            li.page-item
-              a.page-link(href="#") 2
-            li.page-item
-              a.page-link(href="#") 3
-            li.page-item
-              a.page-link(href="#") »
+        // Phân trang mixin
+        +pagination(pagination)
