@@ -1,5 +1,6 @@
 const express = require('express'); // khai vao express
 const methodOverride = require('method-override')
+const bodyParser = require('body-parser')
 const route = require('./routes/client/index.routes');
 const routeAdmin = require('./routes/admin/index.routes');
 const database = require("./config/database")
@@ -10,6 +11,7 @@ database.connect();
 
 const app = express(); // khoi tao app
 app.use(methodOverride("_method"));
+app.use(bodyParser.urlencoded({extended:false}))
 const port = process.env.PORT;    // khai bao cong
 
 

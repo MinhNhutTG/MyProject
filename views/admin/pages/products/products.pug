@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/fillterStatus.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
 block main
   .container.my-4
     // Thanh tìm kiếm & lọc
@@ -20,10 +21,13 @@ block main
           option Phụ kiện
     // Bảng sản phẩm
     .card.shadow
+      +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
       .card-body
-        table.table.table-hover.align-middle
+        table.table.table-hover.align-middle(checkbox-multi)
           thead.table-dark
             tr
+              th 
+                input(type="checkbox" name="checkall")  
               th Ảnh
               th Tên sản phẩm
               th Giá
@@ -33,6 +37,8 @@ block main
           tbody
             each item in productsList
               tr
+                td  
+                  input(type="checkbox" name="id" value=item.id)
                 td
                   img.rounded.img-fluid(
                     alt="product" 
