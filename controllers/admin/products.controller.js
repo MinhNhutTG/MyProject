@@ -43,3 +43,15 @@ module.exports.index = async (req, res) => {
         
     });
 }
+
+module.exports.changeStatus = async (req,res) => {
+    console.log(req.params);
+    const status = req.params.status;
+    const idsp = req.params.id;
+
+    console.log(`Gia tri can thay doi ${status} - ${idsp}`);
+    await Product.updateOne({_id:idsp},{status:status});
+
+   
+    res.redirect(req.get('Referer') || '/');
+}

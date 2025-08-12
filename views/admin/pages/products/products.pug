@@ -43,10 +43,18 @@ block main
                 td #{item.price}$
                 td #{item.quanlity} Cái
                 td
-                  if ( item.quanlity > 0)
-                    span.badge.bg-success Hoạt động
+                  if ( item.status == "active")
+                    span.badge.bg-success(
+                      data-status=item.status
+                      data-id=item.id 
+                      btn-change-status
+                    ) Hoạt động
                   else 
-                    span.badge.bg-warning Ngưng hoạt động 
+                    span.badge.bg-warning(
+                      data-status=item.status
+                      data-id=item.id 
+                      btn-change-status
+                    ) Ngưng hoạt động 
                 td
                   a.btn.btn-warning.btn-sm(href="#")
                     i.fas.fa-edit
@@ -56,3 +64,10 @@ block main
             
         // Phân trang mixin
         +pagination(pagination)
+        form(
+          action="",
+          method="POST"
+          id="form-change-status"
+          data-path=`${prefixAdmin}/products/change-status` 
+        ) 
+        script(src="/admin/js/products.js") 
