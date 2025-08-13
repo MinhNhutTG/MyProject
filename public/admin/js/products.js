@@ -65,12 +65,12 @@ if (formChangeMulti) {
             let ids = [];
 
             const inputIds = formChangeMulti.querySelector("input[name='ids']");
-            
+
             inputsChecked.forEach((item) => {
                 const id = item.value;
                 ids.push(id);
             })
-           
+
             inputIds.value = ids.join(", ")
 
             formChangeMulti.submit();
@@ -78,5 +78,30 @@ if (formChangeMulti) {
         else {
             alert("Vui lòng chọn ít nhất một bảng ghi");
         }
+    })
+}
+
+// FORM DELETE ITEM
+
+const buttonDeleteItem = document.querySelectorAll("[button-delete]");
+if (buttonDeleteItem.length > 0) {
+    const formDeleteItem = document.querySelector("#form-delete-item");
+    const path = formDeleteItem.getAttribute("data-path");
+
+    buttonDeleteItem.forEach((item) => {
+        item.addEventListener("click", () => {
+            console.log(item)
+            if (confirm("Bạn có muốn xóa sản phẩm này?") == true) {
+                const id = item.getAttribute("data-id");
+                
+                const action = `${path}/${id}?_method=DELETE`;
+
+                formDeleteItem.action = action;
+
+                formDeleteItem.submit();
+
+                
+            }
+        })
     })
 }
