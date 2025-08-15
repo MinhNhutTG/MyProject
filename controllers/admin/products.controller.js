@@ -68,6 +68,8 @@ module.exports.changeMulti = async (req, res) => {
         case "inactive":
             await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
             break;
+        case "deleteAll":
+            await Product.updateMany({ _id: { $in: ids } }, { deleted: true, deleteAt: new Date().toLocaleString() })
         default:
             break;
     }
@@ -79,7 +81,7 @@ module.exports.deleteItem = async (req, res) => {
 
     await Product.updateOne({ _id: id }, {
         deleted: true,
-        deleteAt: new  Date().toLocaleString()
+        deleteAt: new Date().toLocaleString()
     })
 
     res.redirect(req.get('Referer') || '/');
