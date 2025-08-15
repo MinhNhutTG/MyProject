@@ -32,6 +32,7 @@ block main
               th Tên sản phẩm
               th Giá
               th Tồn kho
+              th Vị trí
               th Trạng thái
               th Hành động
           tbody
@@ -48,6 +49,14 @@ block main
                 td #{item.title}
                 td #{item.price}$
                 td #{item.quanlity} Cái
+                td
+                  input(
+                    style="width: 70px"
+                    type="number"
+                    min="1"
+                    value=`${item.position}`
+                    name="position"
+                  )
                 td
                   if ( item.status == "active")
                     span.badge.bg-success(
