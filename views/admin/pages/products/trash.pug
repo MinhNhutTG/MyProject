@@ -1,0 +1,44 @@
+//- Trang thùng rác sản phẩm
+//- Yêu cầu: method-override ở server để nhận PUT/DELETE
+//- Biến đầu vào gợi ý: { products, pagination, keyword, basePath }
+
+extends ../../layouts/default.pug
+
+block main
+  .container.my-4
+    h1.mb-3 Thùng rác sản phẩm
+  
+    .table-responsive
+      table.table.table-striped
+        thead
+          tr
+            th Tên
+            th Giá
+            th Trạng thái
+            th Đã xóa lúc
+            th Hành động
+        tbody
+          each item in productDeleted
+            tr
+              td #{item.title}
+              td #{item.price} $
+              td
+                span.badge.bg-success(button-restore data-id= `${item.id}` ) Khôi phục
+              td #{item.deleteAt}
+              td
+                button.btn.btn-sm.btn-outline-success(
+                  type="button",
+                  btn-change-status,
+                  data-status="active",
+                  data-id="2"
+                ) Bật
+  
+    //- Form ẩn đổi trạng thái
+    form(
+        action=""
+        method="POST"
+        id="form-restore-item"
+        data-path = `${prefixAdmin}/products/trash/restore`
+    )
+      input(type="hidden" name="_method" value="PUT")
+      script(src="/admin/js/trash.js") 

@@ -3,8 +3,12 @@ mixin form-change-multi(action)
           .d-flex.align-items-start
             .form-group
               select(name="type" class="form-control")
-                option(value="active") Hoạt động
+                option(value="" disabled selected) -- Chọn hành động --
+                option(value="active") Đang hoạt động
                 option(value="inactive") Dừng hoạt động
+                option(value="deleteAll") Xóa tất cả lựa chọn
+                option(value="change-position") Thay đổi vị trí
+
             .form-group
               input(type="text" name="ids" value="" class="form-control d-none")
             button(type="submit" class="btn btn-primary") Áp dụng      

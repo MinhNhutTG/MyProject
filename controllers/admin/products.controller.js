@@ -34,7 +34,7 @@ module.exports.index = async (req, res) => {
         req.query
     )
 
-    const products = await Product.find(find).limit(objectPagination.litmitProduct).skip(objectPagination.skip);
+    const products = await Product.find(find).sort({position:"desc"}).limit(objectPagination.litmitProduct).skip(objectPagination.skip);
     res.render("./admin/pages/products/products.pug", {
         productsList: products,
         fillerButton: fillterStatus,
@@ -70,6 +70,16 @@ module.exports.changeMulti = async (req, res) => {
             break;
         case "deleteAll":
             await Product.updateMany({ _id: { $in: ids } }, { deleted: true, deleteAt: new Date().toLocaleString() })
+            break;
+        case "change-position":
+            for (const item of ids) {
+                let [id, position] = item.split("-");
+                
+                position = parseInt(position);
+                
+                await Product.updateOne({_id:id}, { position:position });
+            }
+            break;
         default:
             break;
     }

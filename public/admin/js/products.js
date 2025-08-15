@@ -61,6 +61,16 @@ if (formChangeMulti) {
 
         const checkBoxMulti = document.querySelector("[checkbox-multi]");
         const inputsChecked = checkBoxMulti.querySelectorAll("input[name='id']:checked");
+
+        const type = e.target.elements.type.value;
+
+        if (type == "deleteAll") {
+            const isconfirm = confirm("Bạn có muốn xóa các sản phẩm này không?");
+            if (!isconfirm) {
+                return;
+            }
+        }
+
         if (inputsChecked.length > 0) {
             let ids = [];
 
@@ -68,16 +78,23 @@ if (formChangeMulti) {
 
             inputsChecked.forEach((item) => {
                 const id = item.value;
-                ids.push(id);
+                if (type == "change-position"){
+                   const index = item.closest("tr").querySelector("input[name='position']").value;
+                   const idIndex = `${id}-${index}`;
+                   ids.push(idIndex);
+                }else{
+                    ids.push(id);
+                }
+               
             })
 
             inputIds.value = ids.join(", ")
-
             formChangeMulti.submit();
         }
         else {
             alert("Vui lòng chọn ít nhất một bảng ghi");
         }
+
     })
 }
 
@@ -93,15 +110,16 @@ if (buttonDeleteItem.length > 0) {
             console.log(item)
             if (confirm("Bạn có muốn xóa sản phẩm này?") == true) {
                 const id = item.getAttribute("data-id");
-                
+
                 const action = `${path}/${id}?_method=DELETE`;
 
                 formDeleteItem.action = action;
 
                 formDeleteItem.submit();
 
-                
+
             }
         })
     })
 }
+
