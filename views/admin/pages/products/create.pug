@@ -10,7 +10,7 @@ block main
       if messages && messages.error
         .alert.alert-danger= messages.error
   
-      form(action=`${prefixAdmin}/products/create` method="POST" )
+      form(action=`${prefixAdmin}/products/create` method="POST" enctype="multipart/form-data" )
         .mb-3
           label.form-label(for="name") Tên sản phẩm
           input#name.form-control(type="text" name="title" required placeholder="Nhập tên sản phẩm" )
@@ -33,7 +33,7 @@ block main
 
         .mb-3
           label.form-label(for="image") Ảnh sản phẩm
-          input#image.form-control(type="text" name="image" accept="image/*" )
+          input#image.form-control(type="file" name="image" accept="image/*"  )
 
         .mb-3
           label.form-label(for="position") Vị trí
