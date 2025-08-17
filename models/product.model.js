@@ -5,14 +5,19 @@ const ProductSchema = new mongoose.Schema({
     description: String,
     category: String,
     price: Number,
-    quanlity: Number,
+    stock: Number,
     brand: String,
     images: [String],
     thumbnail: String,
-    deleted: Boolean,
+    deleted: {
+        type:Boolean,
+        default: false
+    },
     status: String,
     deleteAt: String,
     position: Number
+},{
+    timestamps:true
 })
 
 const Product = mongoose.model("Product", ProductSchema, "products");

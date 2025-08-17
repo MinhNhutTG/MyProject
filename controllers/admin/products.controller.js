@@ -1,4 +1,5 @@
 // [GET] admin/products
+const config = require("../../config/systemconfig")
 const Product = require("../../models/product.model");
 const helperFillterStatus = require("../../helpers/fillterStatus");
 const helperSearch = require("../../helpers/search");
@@ -41,7 +42,6 @@ module.exports.index = async (req, res) => {
         fillerButton: fillterStatus,
         keyword: objectSearch.keyword,
         pagination: objectPagination
-
     });
 }
 
@@ -137,4 +137,33 @@ module.exports.restore = async (req, res) => {
 
 
     res.redirect(req.get('Referer') || '/');
+}
+
+
+// ========= [[CONTROLLER CREATE PRODUCT INDEX]]========
+module.exports.create = (req,res)=>{
+    res.render('./admin/pages/products/create.pug');
+}
+
+
+// ========= [[CONTROLLER CREATE PRODUCT POST]]========
+
+module.exports.createPost = async (req,res)=>{
+    req.body.price = Number(req.body.price);
+    req.body.discount = Number(req.body.discount);
+    req.body.stock = Number(req.body.stock);
+
+    if (req.body.position == ""){
+        const total = parseInt( await Product.countDocuments())  + 1;
+         req.body.position = total;
+    }
+    else{
+        req.body.position = Number(req.body.position);
+    }
+    
+    
+    const product = new Product(req.body);
+    await product.save();
+
+    res.redirect(`${config.prefixAdmin}/products`);
 }
