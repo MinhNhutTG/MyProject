@@ -10,18 +10,26 @@ block main
     +showAlert(3000)        
     // Thanh tìm kiếm & lọc
     .row.mb-3
-      .col-md-4 
-              +fillterStatus(fillerButton)
-      .col-md-5
+      .col-md-7
         +searchForm(keyword)
-      
-
-      .col-md-3
+      .col-md-5
         select.form-select
           option(value="") Tất cả danh mục
           option Áo
           option Quần
           option Phụ kiện
+    .row.mb-3
+        .col-md-4 
+                +fillterStatus(fillerButton)
+        .col-md-8 
+          .d-flex.justify-content-end
+            a(
+              class="btn btn-success"
+              addProduct
+              href=`${prefixAdmin}/products/create`
+            ) Thêm sản phẩm <i class="fa-solid fa-plus"></i>
+        
+
     // Bảng sản phẩm
     .card.shadow
       +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
@@ -51,7 +59,7 @@ block main
                     )
                 td #{item.title}
                 td #{item.price}$
-                td #{item.quanlity} Cái
+                td #{item.stock} Cái
                 td
                   input(
                     style="width: 70px"

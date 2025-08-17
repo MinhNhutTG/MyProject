@@ -15,7 +15,6 @@ database.connect();
 const app = express();  // KHỞI TẠO APP
 
 app.use(methodOverride("_method"));     // OVERRIDE PHUONG THUOC PATCH DELETED ....
-
 app.use(bodyParser.urlencoded({extended:false}))
 const port = process.env.PORT;        // PORT
 

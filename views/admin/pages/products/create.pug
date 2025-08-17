@@ -1,0 +1,53 @@
+extends ../../layouts/default.pug
+
+block main 
+  .container.my-4
+      h2.mb-4 Thêm sản phẩm mới
+  
+      //- Hiển thị flash message nếu có
+      if messages && messages.success
+        .alert.alert-success= messages.success
+      if messages && messages.error
+        .alert.alert-danger= messages.error
+  
+      form(action=`${prefixAdmin}/products/create` method="POST" )
+        .mb-3
+          label.form-label(for="name") Tên sản phẩm
+          input#name.form-control(type="text" name="title" required placeholder="Nhập tên sản phẩm" )
+  
+        .mb-3
+          label.form-label(for="description") Mô tả
+          textarea#description.form-control(name="description" rows="4" placeholder="Nhập mô tả sản phẩm" )
+
+        .mb-3
+          label.form-label(for="price") Giá
+          input#price.form-control(type="text" name="price"  required placeholder="Nhập giá sản phẩm" )
+        
+        .mb-3
+          label.form-label(for="discount") % Giảm giá
+          input#discount.form-control(type="text" name="discount" min="0" required placeholder="Nhập giảm giá" )
+
+        .mb-3
+          label.form-label(for="stock") Số lượng
+          input#stock.form-control(type="number" name="stock" min="0" required placeholder="Nhập số lượng" )
+
+        .mb-3
+          label.form-label(for="image") Ảnh sản phẩm
+          input#image.form-control(type="text" name="image" accept="image/*" )
+
+        .mb-3
+          label.form-label(for="position") Vị trí
+          input#position.form-control(type="number" name="position" min="0"  placeholder="Nhập vị trí")
+        
+        .mb-3
+          label.form-label Trạng thái
+          .form-check
+            input#active-yes.form-check-input(type="radio" name="status" value="active" checked)
+            label.form-check-label(for="active-yes") Hoạt độngc
+          .form-check
+            input#active-no.form-check-input(type="radio" name="status" value="inactive")
+            label.form-check-label(for="active-no") Dừng hoạt động
+
+  
+        button.btn.btn-primary(type="submit") Thêm sản phẩm
+        a.btn.btn-secondary.ms-2(href="/admin/products") Hủy
