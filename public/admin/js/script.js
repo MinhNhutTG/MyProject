@@ -1,5 +1,6 @@
+//==========[[ SCRIPT FILTER STATUS ]] ============
 const buttonFillerStatus = document.querySelectorAll(".btn-filler-status");
-if (buttonFillerStatus) {
+if (buttonFillerStatus){
     const url = new URL(window.location.href);
     buttonFillerStatus.forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -16,7 +17,7 @@ if (buttonFillerStatus) {
     })
 }
 
-
+//==========[[ SCRIPT FORM SEARCH ]] ============
 const formSearch = document.querySelector("#formSearch");
 if (formSearch){
     const url = new URL(window.location.href);
@@ -33,6 +34,7 @@ if (formSearch){
     })
 }
 
+//==========[[ SCRIPT PAGINATION ]] ============
 const btnPagination = document.querySelectorAll("[btn-pagination]");
 btnPagination.forEach((btn)=>{
     btn.addEventListener("click",()=>{
@@ -48,3 +50,20 @@ btnPagination.forEach((btn)=>{
     })
     
 })
+
+//==========[[ SCRIPT SHOW-ALERT ]] ============
+const showAlert = document.querySelector("[show-alert]");
+if (showAlert){
+    console.log(showAlert)
+    const timeout =  showAlert.getAttribute("data-time");
+    const closeMark = showAlert.querySelector(".close-mark");
+
+    closeMark.addEventListener("click",()=>{
+         showAlert.classList.add("d-none");
+    })
+
+    setTimeout(() => {
+        showAlert.classList.add("d-none");
+    }, timeout);
+
+}

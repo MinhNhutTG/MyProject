@@ -5,6 +5,7 @@ const helperSearch = require("../../helpers/search");
 const helperPagination = require("../../helpers/pagination");
 const pagination = require("../../helpers/pagination");
 
+//========== [[ INDEX ]] =============
 module.exports.index = async (req, res) => {
 
     const fillterStatus = helperFillterStatus(req.query);
@@ -44,18 +45,23 @@ module.exports.index = async (req, res) => {
     });
 }
 
+
+//========== [[ CONTROLLER CHANGE STATUS ]] =============
 module.exports.changeStatus = async (req, res) => {
 
     const status = req.params.status;
     const idsp = req.params.id;
 
-    console.log(`Gia tri can thay doi ${status} - ${idsp}`);
+  
     await Product.updateOne({ _id: idsp }, { status: status });
 
+    req.flash("success", "Cập nhật trạng thái sản phẩm thành công!");
 
     res.redirect(req.get('Referer') || '/');
 }
 
+
+//========== [[ CONTROLLER CHANGE MULTI STATUS AND DELETE ]] =============
 module.exports.changeMulti = async (req, res) => {
 
     const type = req.body.type;
@@ -64,12 +70,15 @@ module.exports.changeMulti = async (req, res) => {
     switch (type) {
         case "active":
             await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+            req.flash("success", "Cập nhật trạng thái nhiều sản phẩm thành công!");
             break;
         case "inactive":
             await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+            req.flash("success", "Cập nhật trạng thái nhiều sản phẩm thành công!");
             break;
         case "deleteAll":
             await Product.updateMany({ _id: { $in: ids } }, { deleted: true, deleteAt: new Date().toLocaleString() })
+            req.flash("success", "Xóa nhiều sản phẩm thành công!");
             break;
         case "change-position":
             for (const item of ids) {
@@ -78,14 +87,20 @@ module.exports.changeMulti = async (req, res) => {
                 position = parseInt(position);
                 
                 await Product.updateOne({_id:id}, { position:position });
+
+                
             }
+            req.flash("success", "Thay đổi vị trí nhiều sản phẩm thành công!");
             break;
         default:
             break;
+        
     }
     res.redirect(req.get('Referer') || '/');
 }
 
+
+//========== [[ CONTROLLER DELETE PRODUCT ]] =============
 module.exports.deleteItem = async (req, res) => {
     const id = req.params.id;
 
@@ -94,10 +109,13 @@ module.exports.deleteItem = async (req, res) => {
         deleteAt: new Date().toLocaleString()
     })
 
+    req.flash("success", "Xóa sản phẩm thành công!");
+
     res.redirect(req.get('Referer') || '/');
 }
 
 
+//==========[[ CONTROLLER TRASH INDEX ]] ============
 module.exports.trash = async (req, res) => {
     let find = {
         deleted: true
@@ -110,10 +128,13 @@ module.exports.trash = async (req, res) => {
 }
 
 
+//==========[[ CONTROLLER RESTORE ]] ============
 module.exports.restore = async (req, res) => {
     const id = req.params.id;
 
     await Product.updateOne({ _id: id }, { deleted: false });
+
+
 
     res.redirect(req.get('Referer') || '/');
 }

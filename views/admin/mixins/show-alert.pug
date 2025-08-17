@@ -1,0 +1,6 @@
+mixin showAlert(time)
+  if messages.success
+          .alert.alert-success(
+            data-time = time
+            show-alert
+          ) #{messages.success} <span class="mx-3 close-mark"><i class="fa-solid fa-xmark" style="cursor:pointer"></i></span>
