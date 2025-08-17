@@ -3,8 +3,11 @@ include ../../mixins/fillterStatus.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
+include ../../mixins/show-alert.pug
 block main
+  
   .container.my-4
+    +showAlert(3000)        
     // Thanh tìm kiếm & lọc
     .row.mb-3
       .col-md-4 
@@ -92,3 +95,4 @@ block main
           data-path=`${prefixAdmin}/products/deleteItem` 
         ) 
         script(src="/admin/js/products.js") 
+        
