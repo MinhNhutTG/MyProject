@@ -134,8 +134,6 @@ module.exports.restore = async (req, res) => {
 
     await Product.updateOne({ _id: id }, { deleted: false });
 
-
-
     res.redirect(req.get('Referer') || '/');
 }
 
@@ -149,6 +147,7 @@ module.exports.create = (req,res)=>{
 // ========= [[CONTROLLER CREATE PRODUCT POST]]========
 
 module.exports.createPost = async (req,res)=>{
+    
     req.body.price = Number(req.body.price);
     req.body.discount = Number(req.body.discount);
     req.body.stock = Number(req.body.stock);
@@ -161,7 +160,10 @@ module.exports.createPost = async (req,res)=>{
         req.body.position = Number(req.body.position);
     }
     
-    req.body.thumbnail = `/uploads/${req.file.filename}` ;
+    if (req.file){
+         req.body.thumbnail = `/uploads/${req.file.filename}` ;
+    }
+   
     
     const product = new Product(req.body);
     await product.save();
