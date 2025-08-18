@@ -1,0 +1,92 @@
+extends ../../layouts/default.pug
+include ../../mixins/show-alert.pug
+
+block main 
+  .container.my-4
+      h2.mb-4 Thêm sản phẩm mới
+  
+      //- Hiển thị flash message nếu có
+      +showAlert-error(3000)
+  
+      form(action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH` method="POST" enctype="multipart/form-data" id="form-edit" )
+        .mb-3
+          label.form-label(for="name") Tên sản phẩm
+          input#name.form-control(type="text" name="title"  placeholder="Nhập tên sản phẩm" value=product.title )
+  
+        .mb-3
+          label.form-label(for="description") Mô tả
+          textarea#description.form-control(name="description" rows="4" placeholder="Nhập mô tả sản phẩm" value=product.description ) #{product.description}
+
+        .mb-3
+          label.form-label(for="price") Giá
+          input#price.form-control(type="text" name="price"   placeholder="Nhập giá sản phẩm" value=product.price )
+        
+        .mb-3
+          label.form-label(for="discountPercentage") % Giảm giá
+          input#discountPercentage.form-control(type="text" name="discountPercentage" min="0"  placeholder="Nhập giảm giá" value=product.discountPercentage )
+
+        .mb-3
+          label.form-label(for="stock") Số lượng
+          input#stock.form-control(type="number" name="stock" min="0"  placeholder="Nhập số lượng" value=product.stock )
+
+        .mb-3(upload-images)
+          label.form-label(for="image") Ảnh sản phẩm
+          input#image.form-control(type="file" name="image" accept="image/*" upload-images-input-edit)
+
+          //- Khung chứa ảnh và nút X
+          div.position-relative.d-inline-block.mt-2(style="width:150px")
+            img(
+              src=`${product.thumbnail}`
+              upload-images-review-edit
+              style="width:150px; border:1px solid #868585ff; border-radius:8px;"
+            )
+            //- Nút X
+            span.position-absolute.d-none.top-0.end-0.bg-danger.text-white.rounded-circle.px-2(style="cursor:pointer" close-image-edit) X
+         
+              
+
+        .mb-3
+          label.form-label(for="position") Vị trí
+          input#position.form-control(type="number" name="position" min="0"  placeholder="Nhập vị trí" value=product.position)
+        
+        .mb-3
+          label.form-label Trạng thái
+          .form-check
+            input#active-yes.form-check-input(type="radio" name="status" value="active" checked=(product.status == "active" ? true : false))
+            label.form-check-label(for="active-yes") Hoạt động
+          .form-check
+            input#active-no.form-check-input(type="radio" name="status" value="inactive" checked=(product.status == "inactive" ? true : false ))
+            label.form-check-label(for="active-no") Dừng hoạt động
+
+  
+        button.btn.btn-primary(type="submit" button-edit) Cập nhật chỉnh sửa
+        a.btn.btn-secondary.ms-2(href="/admin/products") Hủy
+  script.
+    const uploadImage = document.querySelector("#form-edit");
+    const  uploadImageInput = document.querySelector("[upload-images-input-edit]");
+    const uploadImageReview = document.querySelector("[upload-images-review-edit]");
+    let spanCloseImage = document.querySelector("[close-image-edit]");
+
+    if (uploadImageReview.src != "" || uploadImageInput.src != null){
+          spanCloseImage.classList.remove("d-none");
+          spanCloseImage.classList.add("d-block");
+    }
+
+    if (uploadImage){
+        uploadImageInput.addEventListener("change",(e)=>{
+            const file = e.target.files[0];
+            if (file){
+                uploadImageReview.src = "";
+                uploadImageReview.src = URL.createObjectURL(file);
+                spanCloseImage.classList.remove("d-none");
+                spanCloseImage.classList.add("d-block");
+            }
+        })
+    }
+
+    spanCloseImage.addEventListener("click",()=>{
+        uploadImageReview.src = ""
+        spanCloseImage.classList.remove("d-block");
+        spanCloseImage.classList.add("d-none");
+        uploadImageInput.value=""
+    })

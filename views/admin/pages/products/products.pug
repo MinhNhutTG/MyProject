@@ -82,7 +82,7 @@ block main
                       btn-change-status
                     ) Ngưng hoạt động 
                 td
-                  a.btn.btn-warning.btn-sm(href="#")
+                  a.btn.btn-warning.btn-sm(href=`${prefixAdmin}/products/edit/${item._id}`)
                     i.fas.fa-edit
                   .btn.btn-danger.btn-sm(href="#" button-delete data-id=item._id )
                     i.fas.fa-trash
