@@ -1,19 +1,17 @@
 extends ../../layouts/default.pug
+include ../../mixins/show-alert.pug
 
 block main 
   .container.my-4
       h2.mb-4 Thêm sản phẩm mới
   
       //- Hiển thị flash message nếu có
-      if messages && messages.success
-        .alert.alert-success= messages.success
-      if messages && messages.error
-        .alert.alert-danger= messages.error
+      +showAlert-error(3000)
   
       form(action=`${prefixAdmin}/products/create` method="POST" enctype="multipart/form-data" )
         .mb-3
           label.form-label(for="name") Tên sản phẩm
-          input#name.form-control(type="text" name="title" required placeholder="Nhập tên sản phẩm" )
+          input#name.form-control(type="text" name="title"  placeholder="Nhập tên sản phẩm" )
   
         .mb-3
           label.form-label(for="description") Mô tả
@@ -21,15 +19,15 @@ block main
 
         .mb-3
           label.form-label(for="price") Giá
-          input#price.form-control(type="text" name="price"  required placeholder="Nhập giá sản phẩm" )
+          input#price.form-control(type="text" name="price"   placeholder="Nhập giá sản phẩm" )
         
         .mb-3
           label.form-label(for="discount") % Giảm giá
-          input#discount.form-control(type="text" name="discount" min="0" required placeholder="Nhập giảm giá" )
+          input#discount.form-control(type="text" name="discount" min="0"  placeholder="Nhập giảm giá" )
 
         .mb-3
           label.form-label(for="stock") Số lượng
-          input#stock.form-control(type="number" name="stock" min="0" required placeholder="Nhập số lượng" )
+          input#stock.form-control(type="number" name="stock" min="0"  placeholder="Nhập số lượng" )
 
         .mb-3(upload-images)
           label.form-label(for="image") Ảnh sản phẩm
