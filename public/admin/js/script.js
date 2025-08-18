@@ -67,3 +67,29 @@ if (showAlert){
     }, timeout);
 
 }
+
+
+//===========[[ UPLOAD IMAGES REVIEW ]] =======
+const uploadImage = document.querySelector("[upload-images]");
+const  uploadImageInput = document.querySelector("[upload-images-input]");
+const uploadImageReview = document.querySelector("[upload-images-review]");
+let spanCloseImage = document.querySelector("[close-image]");
+
+if (uploadImage){
+    uploadImageInput.addEventListener("change",(e)=>{
+        
+        console.log(e)
+        const file = e.target.files[0];
+        if (file){
+            uploadImageReview.src = URL.createObjectURL(file);
+            spanCloseImage.classList.remove("d-none");
+            spanCloseImage.classList.add("d-block");
+        }
+    })
+}
+
+spanCloseImage.addEventListener("click",()=>{
+    uploadImageReview.src = ""
+    spanCloseImage.classList.remove("d-block");
+    spanCloseImage.classList.add("d-none");
+})
