@@ -36,7 +36,7 @@ module.exports.index = async (req, res) => {
         req.query
     )
 
-    const products = await Product.find(find).sort({position:"desc"}).limit(objectPagination.litmitProduct).skip(objectPagination.skip);
+    const products = await Product.find(find).sort({ position: "desc" }).limit(objectPagination.litmitProduct).skip(objectPagination.skip);
     res.render("./admin/pages/products/products.pug", {
         productsList: products,
         fillerButton: fillterStatus,
@@ -52,7 +52,7 @@ module.exports.changeStatus = async (req, res) => {
     const status = req.params.status;
     const idsp = req.params.id;
 
-  
+
     await Product.updateOne({ _id: idsp }, { status: status });
 
     req.flash("success", "Cập nhật trạng thái sản phẩm thành công!");
@@ -83,18 +83,18 @@ module.exports.changeMulti = async (req, res) => {
         case "change-position":
             for (const item of ids) {
                 let [id, position] = item.split("-");
-                
-                position = parseInt(position);
-                
-                await Product.updateOne({_id:id}, { position:position });
 
-                
+                position = parseInt(position);
+
+                await Product.updateOne({ _id: id }, { position: position });
+
+
             }
             req.flash("success", "Thay đổi vị trí nhiều sản phẩm thành công!");
             break;
         default:
             break;
-        
+
     }
     res.redirect(req.get('Referer') || '/');
 }
@@ -139,34 +139,66 @@ module.exports.restore = async (req, res) => {
 
 
 // ========= [[CONTROLLER CREATE PRODUCT INDEX]]========
-module.exports.create = (req,res)=>{
+module.exports.create = (req, res) => {
     res.render('./admin/pages/products/create.pug');
 }
 
 
 // ========= [[CONTROLLER CREATE PRODUCT POST]]========
 
-module.exports.createPost = async (req,res)=>{
-    
+module.exports.createPost = async (req, res) => {
+
     req.body.price = Number(req.body.price);
     req.body.discount = Number(req.body.discount);
     req.body.stock = Number(req.body.stock);
 
-    if (req.body.position == ""){
-        const total = parseInt( await Product.countDocuments())  + 1;
-         req.body.position = total;
+    if (req.body.position == "") {
+        const total = parseInt(await Product.countDocuments()) + 1;
+        req.body.position = total;
     }
-    else{
+    else {
         req.body.position = Number(req.body.position);
     }
-    
-    if (req.file){
-         req.body.thumbnail = `/uploads/${req.file.filename}` ;
+
+    if (req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`;
     }
-   
-    
+
+
     const product = new Product(req.body);
     await product.save();
 
+    req.flash("success", "Thêm sản phẩm thành công");
+
     res.redirect(`${config.prefixAdmin}/products`);
+}
+
+
+// ========= [[ GET //  CONTROLLER RENDER EDIT PAGE ]] =====
+module.exports.edit = async (req, res) => {
+
+    let find = {
+        deleted: false,
+        _id: req.params.id
+    }
+    const productfind = await Product.findOne(find);
+    console.log(productfind);
+    res.render("./admin/pages/products/edit.pug", {
+        product: productfind
+    }
+    );
+}
+
+
+
+// ========= [[ PUT //  CONTROLLER PUT PRODUCT ]] =====
+module.exports.editPost = async (req, res) => {
+    if (req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`;
+    }
+    await Product.updateOne({ _id: req.params.id }, req.body);
+
+    req.flash("success", "Cập nhật sản phẩm thành công");
+
+    res.redirect('/admin/products');
 }

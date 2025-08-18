@@ -9,6 +9,5 @@ module.exports.validatePost = (req, res, next) => {
         res.redirect(req.get('Referer') || '/');
         return;
     }
-
     next();
 }

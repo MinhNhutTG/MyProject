@@ -22,8 +22,8 @@ block main
           input#price.form-control(type="text" name="price"   placeholder="Nhập giá sản phẩm" )
         
         .mb-3
-          label.form-label(for="discount") % Giảm giá
-          input#discount.form-control(type="text" name="discount" min="0"  placeholder="Nhập giảm giá" )
+          label.form-label(for="discountPercentage") % Giảm giá
+          input#discountPercentage.form-control(type="text" name="discountPercentage" min="0"  placeholder="Nhập giảm giá" )
 
         .mb-3
           label.form-label(for="stock") Số lượng
@@ -53,7 +53,7 @@ block main
           label.form-label Trạng thái
           .form-check
             input#active-yes.form-check-input(type="radio" name="status" value="active" checked)
-            label.form-check-label(for="active-yes") Hoạt độnggi
+            label.form-check-label(for="active-yes") Hoạt động
           .form-check
             input#active-no.form-check-input(type="radio" name="status" value="inactive")
             label.form-check-label(for="active-no") Dừng hoạt động
