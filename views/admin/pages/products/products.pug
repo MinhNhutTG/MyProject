@@ -84,8 +84,10 @@ block main
                 td
                   a.btn.btn-warning.btn-sm(href=`${prefixAdmin}/products/edit/${item._id}`)
                     i.fas.fa-edit
-                  .btn.btn-danger.btn-sm(href="#" button-delete data-id=item._id )
+                  a.btn.btn-danger.btn-sm(href="#" button-delete data-id=item._id )
                     i.fas.fa-trash
+                  a.btn.btn-info.btn-sm(href=`${prefixAdmin}/products/detail/${item._id}` button-detail)
+                    i.fa-solid.fa-circle-info
             
             
         // Phân trang mixin

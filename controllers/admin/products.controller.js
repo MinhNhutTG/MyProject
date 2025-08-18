@@ -202,3 +202,19 @@ module.exports.editPost = async (req, res) => {
 
     res.redirect('/admin/products');
 }
+
+
+// ====== [[ GET // CONTROLLER GET DETAIL PRODUCT ]] =====
+module.exports.detail = async (req,res)=>{
+    
+    let find = {
+        deleted:false,
+        _id: req.params.id
+    }
+    
+    const product = await Product.findOne(find);
+
+    res.render("./admin/pages/products/detail.pug",{
+        product:product
+    });
+}

@@ -1,0 +1,136 @@
+//- views/admin/products/detail.pug
+extends ../../layouts/default.pug
+
+block main
+  .container.my-4
+    //- Breadcrumb
+    nav(aria-label="breadcrumb")
+      ol.breadcrumb
+        li.breadcrumb-item
+          a(href=`${prefixAdmin}/dashboard`) Dashboard
+        li.breadcrumb-item
+          a(href=`${prefixAdmin}/products/`) Sản phẩm
+        li.breadcrumb-item.active(aria-current="page") Chi tiết sản phẩm
+
+    //- Header + Actions
+    .d-flex.justify-content-between.align-items-center.mb-3
+      h3.mb-0  #{product.title}
+      .btn-group
+        a.btn.btn-outline-secondary(href=`${prefixAdmin}/products/`) 
+          i.bi.bi-arrow-left-short.me-1
+          | Quay lại
+        a.btn.btn-primary(href=`${prefixAdmin}/products/edit/${product._id}`) 
+          i.bi.bi-pencil-square.me-1
+          | Sửa
+        
+
+    //- Thẻ trạng thái
+    .mb-3
+      if (product.status == "active")
+        span( class="badge bg-success me-2") Đang hoạt động
+      else
+        span( class="badge bg-danger me-2") Ngưng hoạt động
+      
+      span.badge.bg-warning.text-dark.me-2 Nổi bật
+      span.badge.bg-info.text-dark.me-2 Tồn kho: #{product.stock}
+
+    //- Nội dung chính
+    .row.g-4
+      //- Cột ảnh
+      .col-lg-5
+        .card.shadow-sm
+          .card-body
+            //- Ảnh chính
+            .ratio.ratio-1x1.mb-3(style="background:#f8f9fa; border:1px solid #eee; border-radius:0.75rem; overflow:hidden")
+              img(src=`${product.thumbnail}` alt="Ảnh sản phẩm" class="w-100 h-100 object-fit-contain p-2")
+
+            //- Thumbnail list
+            .d-flex.flex-wrap.gap-2
+              each i in [1,2,3,4]
+                .thumb.border.rounded.p-1(style="width:72px; height:72px; cursor:pointer;")
+                  img(src=`${product.thumbnail}`  alt="thumb" class="w-100 h-100 object-fit-contain")
+
+      //- Cột thông tin
+      .col-lg-7
+        .card.shadow-sm
+          .card-body
+            h5.mb-3 Thông tin sản phẩm
+            h4.mb-1 #{product.title}
+            .text-muted.mb-2 SKU: Ma noi bo
+
+            //- Giá
+            .d-flex.align-items-baseline.gap-3.mb-3
+              span.fs-4.fw-bold.text-danger #{product.price} $
+              del.text-muted #{product.discountPercentage} $
+              span.badge.bg-danger -30%
+
+            //- Mô tả ngắn
+            p.mb-3 #{product.description}
+            //- Bảng chi tiết
+            .table-responsive
+              table.table.table-sm.align-middle
+                tbody
+                  tr
+                    th.w-25.text-nowrap Danh mục
+                    td Điện thoại
+                  tr
+                    th Thương hiệu
+                    td Samsung
+                  tr
+                    th Slug
+                    td 
+                      code #{product.slug}
+                  tr
+                    th Vị trí
+                    td #{product.position}
+                  tr
+                    th Ngày tạo
+                    td #{product.createdAt}
+                  tr
+                    th Ngày cập nhật
+                    td #{product.updatedAt}
+
+    //- Tabs chi tiết mở rộng
+    .card.shadow-sm.mt-4
+      .card-header.bg-light
+        ul.nav.nav-tabs.card-header-tabs(role="tablist")
+          li.nav-item
+            a.nav-link.active(href="#tab-overview", data-bs-toggle="tab") Tổng quan
+          li.nav-item
+            a.nav-link(href="#tab-specs", data-bs-toggle="tab") Thông số
+          li.nav-item
+            a.nav-link(href="#tab-images", data-bs-toggle="tab") Hình ảnh
+
+      .card-body
+        .tab-content
+          //- Overview
+          .tab-pane.fade.show.active#tab-overview
+            p Đây là phần mô tả chi tiết sản phẩm. Nội dung có thể dài hơn và có thể chứa HTML.
+
+          //- Specifications
+          .tab-pane.fade#tab-specs
+            .table-responsive
+              table.table.table-bordered.table-sm
+                thead
+                  tr
+                    th.w-25 Thuộc tính
+                    th Giá trị
+                tbody
+                  tr
+                    td Màu sắc
+                    td Đen
+                  tr
+                    td Kích thước
+                    td 6.5 inch
+                  tr
+                    td Trọng lượng
+                    td 200g
+
+          //- Images grid
+          .tab-pane.fade#tab-images
+            .row.row-cols-2.row-cols-md-3.row-cols-lg-4.g-3
+              each i in [1,2,3,4,5,6]
+                .col
+                  .card.h-100
+                    .ratio.ratio-1x1
+                      img(src="https://via.placeholder.com/300" alt="Ảnh chi tiết" class="w-100 h-100 object-fit-contain")
