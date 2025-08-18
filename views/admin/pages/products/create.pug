@@ -31,9 +31,21 @@ block main
           label.form-label(for="stock") Số lượng
           input#stock.form-control(type="number" name="stock" min="0" required placeholder="Nhập số lượng" )
 
-        .mb-3
+        .mb-3(upload-images)
           label.form-label(for="image") Ảnh sản phẩm
-          input#image.form-control(type="file" name="image" accept="image/*"  )
+          input#image.form-control(type="file" name="image" accept="image/*" upload-images-input)
+
+          //- Khung chứa ảnh và nút X
+          div.position-relative.d-inline-block.mt-2(style="width:150px")
+            img(
+              src=""
+              upload-images-review
+              style="width:150px; border:1px solid #868585ff; border-radius:8px;"
+            )
+            //- Nút X
+            span.position-absolute.d-none.top-0.end-0.bg-danger.text-white.rounded-circle.px-2(style="cursor:pointer" close-image) X
+         
+              
 
         .mb-3
           label.form-label(for="position") Vị trí
@@ -43,7 +55,7 @@ block main
           label.form-label Trạng thái
           .form-check
             input#active-yes.form-check-input(type="radio" name="status" value="active" checked)
-            label.form-check-label(for="active-yes") Hoạt độngc
+            label.form-check-label(for="active-yes") Hoạt độnggi
           .form-check
             input#active-no.form-check-input(type="radio" name="status" value="inactive")
             label.form-check-label(for="active-no") Dừng hoạt động
