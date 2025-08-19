@@ -1,0 +1,92 @@
+//- views/product-detail.pug
+extends ../../layouts/default.pug
+
+block main
+  .container.my-5
+    .row.g-4
+      //- LEFT: Hình ảnh sản phẩm
+      .col-md-6
+        .card.shadow-sm
+          img.img-fluid.rounded(
+            src=`${product.thumbnail}`
+            alt="Tên sản phẩm"
+          )
+          .d-flex.gap-2.p-2.justify-content-center.flex-wrap
+            img.img-thumbnail(src=`${product.thumbnail}` alt="thumb1" style="width:80px; height:80px")
+            img.img-thumbnail(src=`${product.thumbnail}` alt="thumb2" style="width:80px; height:80px")
+            img.img-thumbnail(src=`${product.thumbnail}` alt="thumb3" style="width:80px; height:80px")
+
+      //- RIGHT: Thông tin sản phẩm
+      .col-md-6
+        h2.mb-3 #{product.title}
+        p.text-muted Mã SP: SP001 · Thương hiệu: #{product.brand}
+        .mb-3
+          span.h4.text-danger.me-2 #{product.price}$
+          s.text-muted #{product.discountPercentage}$
+          span.badge.bg-danger.ms-2 -25%
+
+        //- Đánh giá
+        .mb-3
+          span.text-warning ★★★★☆
+          small.text-muted.ms-2 (12 đánh giá)
+
+        //- Màu sắc
+        .mb-3
+          label.form-label Màu sắc
+          .d-flex.gap-2
+            span.rounded-circle.border(style="width:24px;height:24px;background:red;")
+            span.rounded-circle.border(style="width:24px;height:24px;background:blue;")
+            span.rounded-circle.border(style="width:24px;height:24px;background:green;")
+
+        //- Size
+        .mb-3
+          label.form-label Kích cỡ
+          select.form-select(style="max-width:150px")
+            option S
+            option M
+            option L
+            option XL
+
+        //- Nút hành động
+        .d-flex.gap-2.mt-4
+          button.btn.btn-primary Thêm vào giỏ
+          button.btn.btn-outline-dark Mua ngay
+
+    //- Tabs mô tả, thông số, đánh giá
+    .mt-5
+      ul.nav.nav-tabs
+        li.nav-item
+          button.nav-link.active(type="button" data-bs-toggle="tab" data-bs-target="#desc") Mô tả
+        li.nav-item
+          button.nav-link(type="button" data-bs-toggle="tab" data-bs-target="#specs") Thông số
+        li.nav-item
+          button.nav-link(type="button" data-bs-toggle="tab" data-bs-target="#reviews") Đánh giá
+
+      .tab-content.border.border-top-0.p-3.bg-white.rounded-bottom.shadow-sm
+        #desc.tab-pane.fade.show.active
+          p Đây là phần mô tả sản phẩm. Bạn có thể thêm chi tiết về chất liệu, kiểu dáng, tính năng,...
+        #specs.tab-pane.fade
+          table.table.table-sm
+            tbody
+              tr
+                th Chất liệu
+                td Cotton 100%
+              tr
+                th Xuất xứ
+                td Việt Nam
+        #reviews.tab-pane.fade
+          p Chưa có đánh giá nào cho sản phẩm này.
+
+    //- Sản phẩm liên quan
+    .mt-5
+      h4.mb-3 Sản phẩm liên quan
+      .row.g-3
+        each i in [1,2,3,4]
+          .col-6.col-md-3
+            .card.h-100.shadow-sm
+              img.card-img-top(src="https://via.placeholder.com/300x300" alt="related")
+              .card-body
+                h6.card-title Sản phẩm #{i}
+                p.text-danger.mb-0 299.000₫
+              .card-footer.bg-white.border-0
+                button.btn.btn-sm.btn-outline-primary Xem chi tiết
