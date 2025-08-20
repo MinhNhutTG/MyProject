@@ -3,40 +3,35 @@ extends ../../layouts/default.pug
 
 block main
   main
-    section.banner
-      .container
-        h1 Chào mừng đến với Cửa hàng ABC!
-        p Mua sắm thỏa thích với giá tốt, chất lượng cao.
-        a.btn(href="/san-pham") Xem tất cả sản phẩm   
-  section.products
-        .container
-          h2 Sản phẩm nổi bật
-
-          .product-grid
-            // Sản phẩm 1
-            .product-card
-              img(src="/images/ao-thun.jpg", alt="Áo thun nam")
-              h3 Áo thun nam
-              p 150.000₫
-              a.btn(href="/san-pham/101") Xem chi tiết
-
-            // Sản phẩm 2
-            .product-card
-              img(src="/images/giay.jpg", alt="Giày thể thao")
-              h3 Giày thể thao
-              p 500.000₫
-              a.btn(href="/san-pham/102") Xem chi tiết
-
-            // Sản phẩm 3
-            .product-card
-              img(src="/images/tui.jpg", alt="Túi xách nữ")
-              h3 Túi xách nữ
-              p 350.000₫
-              a.btn(href="/san-pham/103") Xem chi tiết
-
-            // Sản phẩm 4
-            .product-card
-              img(src="/images/ao-khoac.jpg", alt="Áo khoác nam")
-              h3 Áo khoác nam
-              p 420.000₫
-              a.btn(href="/san-pham/104") Xem chi tiết
+  .container.mt-3
+        #carouselExampleIndicators.carousel.slide(data-bs-ride="carousel")
+          .carousel-indicators
+            button(type="button", data-bs-target="#carouselExampleIndicators", data-bs-slide-to="0", class="active")
+            button(type="button", data-bs-target="#carouselExampleIndicators", data-bs-slide-to="1")
+            button(type="button", data-bs-target="#carouselExampleIndicators", data-bs-slide-to="2")
+          .carousel-inner
+            .carousel-item.active
+              img(src="https://colour.vn/wp-content/uploads/mau-banner-quang-cao-khuyen-mai.jpg" class="d-block w-100")
+            .carousel-item
+              img(src="https://png.pngtree.com/template/20231108/ourlarge/pngtree-12-online-shopping-sale-banner-designs-with-podium-vector-image_1979081.jpg" class="d-block w-100")
+            .carousel-item
+              img(src="https://th.bing.com/th/id/R.74b6624254c109b501d1f8b36e57c7d7?rik=f46X0gzjAp2KOA&pid=ImgRaw&r=0" class="d-block w-100")
+          button.carousel-control-prev(type="button", data-bs-target="#carouselExampleIndicators", data-bs-slide="prev")
+            span.carousel-control-prev-icon
+          button.carousel-control-next(type="button", data-bs-target="#carouselExampleIndicators", data-bs-slide="next")
+            span.carousel-control-next-icon
+  
+  
+  //- Danh sách sản phẩm
+  .container.mt-2
+        h2.text-center.mb-4 
+        .row
+          each product of products
+            .col-md-4.col-lg-3.mb-4
+              .card.h-100.shadow-sm
+                img.card-img-top(src=`${product.thumbnail}`, alt="Sản phẩm ")
+                .card-body.text-center
+                  h5.card-title Sản phẩm #{product.title}
+                  p.text-muted Giá: #{(product.price)}$
+                  a.btn.btn-success(href="#") Mua ngay
+                  a.btn.btn-info(href=`/products/${product.slug}`) Xem chi tiết
