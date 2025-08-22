@@ -159,6 +159,7 @@ module.exports.createPost = async (req, res) => {
     else {
         req.body.position = Number(req.body.position);
     }
+    console.log("hi")
 
     const product = new Product(req.body);
 
@@ -189,6 +190,7 @@ module.exports.edit = async (req, res) => {
 
 // ========= [[ PUT //  CONTROLLER PUT PRODUCT ]] =====
 module.exports.editPost = async (req, res) => {
+    console.log("hi")
     await Product.updateOne({ _id: req.params.id }, req.body);
     req.flash("success", "Cập nhật sản phẩm thành công");
     res.redirect('/admin/products');
