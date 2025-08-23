@@ -36,7 +36,18 @@ module.exports.index = async (req, res) => {
         req.query
     )
 
-    const products = await Product.find(find).sort({ position: "desc" }).limit(objectPagination.litmitProduct).skip(objectPagination.skip);
+    let sort = {};
+
+    if (req.query.keysort && req.query.valuesort){
+        sort[req.query.keysort] = req.query.valuesort;
+    }
+    else{
+        sort.position = "desc"
+    }
+
+
+
+    const products = await Product.find(find).sort(sort).limit(objectPagination.litmitProduct).skip(objectPagination.skip);
     res.render("./admin/pages/products/products.pug", {
         productsList: products,
         fillerButton: fillterStatus,

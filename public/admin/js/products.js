@@ -78,14 +78,14 @@ if (formChangeMulti) {
 
             inputsChecked.forEach((item) => {
                 const id = item.value;
-                if (type == "change-position"){
-                   const index = item.closest("tr").querySelector("input[name='position']").value;
-                   const idIndex = `${id}-${index}`;
-                   ids.push(idIndex);
-                }else{
+                if (type == "change-position") {
+                    const index = item.closest("tr").querySelector("input[name='position']").value;
+                    const idIndex = `${id}-${index}`;
+                    ids.push(idIndex);
+                } else {
                     ids.push(id);
                 }
-               
+
             })
 
             inputIds.value = ids.join(", ")
@@ -99,7 +99,6 @@ if (formChangeMulti) {
 }
 
 // FORM DELETE ITEM
-
 const buttonDeleteItem = document.querySelectorAll("[button-delete]");
 if (buttonDeleteItem.length > 0) {
     const formDeleteItem = document.querySelector("#form-delete-item");
@@ -120,6 +119,37 @@ if (buttonDeleteItem.length > 0) {
 
             }
         })
+    })
+}
+
+// SORT PRODUCT
+const select = document.querySelector("[sort-select]");
+const buttonClear = document.querySelector("[btn-reset]");
+if (select) {
+    const url = new URL(window.location.href);
+    select.addEventListener("change", (e) => {
+        const valueOption = e.target.value;
+        const [keysort, valuesort] = valueOption.split("-");
+        url.searchParams.set("keysort", keysort);
+        url.searchParams.set("valuesort", valuesort);
+        window.location.href = url;
+    })
+
+    buttonClear.addEventListener("click", () => {
+        url.searchParams.delete("keysort");
+        url.searchParams.delete("valuesort");
+        window.location.href = url;
+    })
+    
+
+    const keysort = url.searchParams.get("keysort");
+    const valuesort = url.searchParams.get("valuesort");
+    const keyvalue =  `${keysort}-${valuesort}`;
+    const options = document.querySelectorAll("[option-sort]");
+    options.forEach((item)=>{
+        if (item.value == keyvalue){
+            item.setAttribute("selected",true);
+        }
     })
 }
 

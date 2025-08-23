@@ -28,6 +28,17 @@ block main
               addProduct
               href=`${prefixAdmin}/products/create`
             ) Thêm sản phẩm <i class="fa-solid fa-plus"></i>
+    .row.mb-3 
+      div.col-3.d-flex
+        <select id="sort" name="sort" class="form-select form-select-sm" style="min-width: 220px;" sort-select>
+          <option option-sort value="position-desc" >Vị trí giảm dần</option>
+          <option option-sort value="position-asc">Vị trí tăng dần</option>
+          <option option-sort value="price-desc"    >Giá giảm dần</option>
+          <option option-sort value="price-asc"  >Giá tăng dần</option>
+          <option option-sort value="title-asc"      >Tên A → Z</option>
+          <option option-sort value="title-desc"     >Tên Z → A</option>
+        </select>
+        .btn.btn-danger.mx-2(btn-reset) Clear
         
 
     // Bảng sản phẩm
