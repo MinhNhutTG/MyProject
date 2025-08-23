@@ -159,13 +159,10 @@ module.exports.createPost = async (req, res) => {
     else {
         req.body.position = Number(req.body.position);
     }
-
-    if (req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
-    }
-
+    console.log("hi")
 
     const product = new Product(req.body);
+
     await product.save();
 
     req.flash("success", "Thêm sản phẩm thành công");
@@ -182,7 +179,7 @@ module.exports.edit = async (req, res) => {
         _id: req.params.id
     }
     const productfind = await Product.findOne(find);
-    console.log(productfind);
+
     res.render("./admin/pages/products/edit.pug", {
         product: productfind
     }
@@ -193,13 +190,9 @@ module.exports.edit = async (req, res) => {
 
 // ========= [[ PUT //  CONTROLLER PUT PRODUCT ]] =====
 module.exports.editPost = async (req, res) => {
-    if (req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
-    }
+    console.log("hi")
     await Product.updateOne({ _id: req.params.id }, req.body);
-
     req.flash("success", "Cập nhật sản phẩm thành công");
-
     res.redirect('/admin/products');
 }
 
