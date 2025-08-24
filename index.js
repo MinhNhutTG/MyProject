@@ -1,4 +1,5 @@
 const express = require('express'); // khai vao express
+var path = require('path');
 const session = require('express-session');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
@@ -36,6 +37,9 @@ app.use(session({
   cookie: { maxAge: 60000 }
 }));
 app.use(flash());
+
+// Tiny MCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 
 // === [DEFINE VIEW ENGINE ] === 
