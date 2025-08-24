@@ -38,7 +38,7 @@ app.use(session({
 }));
 app.use(flash());
 
-// Tiny MCE
+// Tiny MCE // 
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 
