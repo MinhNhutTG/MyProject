@@ -1,0 +1,86 @@
+extends ../../layouts/default.pug
+include ../../mixins/show-alert.pug
+include ../../mixins/fillterStatus.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+
+block main 
+  .container.mt-4
+       +showAlert(3000)        
+       .row.mb-3
+         .col-md-7
+           +searchForm(keyword)
+         .col-md-5
+           select.form-select
+             option(value="") Tất cả danh mục
+             option Áo
+             option Quần
+             option Phụ kiện
+       .row.mb-3
+           .col-md-4 
+                   +fillterStatus(fillerButton)
+           .col-md-8 
+             .d-flex.justify-content-end
+               a.btn.btn-primary(href=`${prefixAdmin}/category/create`) + Thêm danh mục
+       .row.mb-3 
+         div.col-3.d-flex
+           <select id="sort" name="sort" class="form-select form-select-sm" style="min-width: 220px;" sort-select>
+             <option option-sort value="position-desc" >Vị trí giảm dần</option>
+             <option option-sort value="position-asc">Vị trí tăng dần</option>
+             <option option-sort value="price-desc"    >Giá giảm dần</option>
+             <option option-sort value="price-asc"  >Giá tăng dần</option>
+             <option option-sort value="title-asc"      >Tên A → Z</option>
+             <option option-sort value="title-desc"     >Tên Z → A</option>
+           </select>
+           .btn.btn-danger.mx-2(btn-reset) Clear
+
+       .d-flex.justify-content-between.align-items-center.mb-3
+         h1.h4.mb-0 Quản lý danh mục
+        
+ 
+       
+ 
+       .table-responsive
+         table.table.table-hover.align-middle
+           thead.table-light
+             tr
+               th Tên
+               th Slug
+               th Danh mục cha
+               th Thứ tự
+               th Trạng thái
+               th.text-end Hành động
+           tbody
+             each item in category
+              tr
+                td
+                  strong #{item.title}
+                  div.text-muted.small !{item.description}
+                td code dien-thoai
+                td —
+                td 
+                  input(
+                    style="width: 70px"
+                    type="number"
+                    min="1"
+                    value=`${item.position}`
+                    name="position"
+                  )
+                td 
+                  if (item.status == "active")
+                    span.badge.bg-success(btn-changeStatus data-id=`${item._id}` data="active") Đang hoạt động
+                  else 
+                    span.badge.bg-danger(btn-changeStatus data-id=`${item._id}` data="inactive") Ngừng hoạt động
+                td.text-end
+                  .btn-group
+                    a.btn.btn-sm.btn-outline-secondary(href="form.html") Sửa
+                    button.btn.btn-sm.btn-outline-info Xem
+                    button.btn.btn-sm.btn-outline-danger Xoá
+       +pagination(pagination)
+       form(
+          action="",
+          method="POST"
+          id="form-change-status"
+          data-path=`${prefixAdmin}/category/change-status` 
+        ) 
+       script(src="/admin/js/products-category.js")
