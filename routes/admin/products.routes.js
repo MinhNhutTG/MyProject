@@ -22,9 +22,7 @@ router.post(
         try {
             const result = await uploadStream(req.file.buffer);
             req.body.thumbnail = result.secure_url;
-            console.log("hi")
             next();
-            
         } catch (error) {
             flash("Không thể tải ảnh này!!!");
         }
@@ -47,4 +45,5 @@ router.patch("/edit/:id", upload.single('image'),
     }
     , productValidate.validatePost, controller.editPost);
 router.get("/detail/:id", controller.detail);
+
 module.exports = router;

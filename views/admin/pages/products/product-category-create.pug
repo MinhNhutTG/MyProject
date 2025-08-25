@@ -1,0 +1,69 @@
+extends ../../layouts/default.pug
+
+block main
+    .container.mt-5
+      .d-flex.justify-content-between.align-items-center.mb-4
+        h1.h4.mb-0 Tạo danh mục mới
+        a.btn.btn-outline-secondary(href="/admin/category") ← Quay lại
+
+      form(action=`${prefixAdmin}/category/create` method="POST" enctype="multipart/form-data" )
+        .row.g-3
+          //- Title
+          .col-md-6
+            label.form-label(for="title") Tên danh mục *
+            input#title.form-control(type="text", placeholder="Ví dụ: Điện thoại" name="title")
+
+          //- Slug
+          .col-md-6
+            label.form-label(for="slug") Slug
+            input#slug.form-control(type="text", placeholder="dien-thoai" name="slug")
+
+          //- Parent
+          .col-md-6
+            label.form-label(for="parent_id") Danh mục cha
+            input#parent_id.form-control(type="text", placeholder="Danh mục cha" name="parent_id")
+            //- select#parent_id.form-select(name="parent_id")
+            //-   option(value="") — Không có —
+            //-   option(value="1") Điện thoại
+            //-   option(value="2") Laptop
+
+          //- Position
+          .col-md-3
+            label.form-label(for="position") Thứ tự
+            input#position.form-control(type="number", min="0", value="0" name="position")
+
+          //- Status
+          .col-md-3
+            label.form-label Trạng thái
+            .d-flex.gap-3
+              .form-check
+                input.form-check-input(type="radio", name="status", id="st1", value="active", checked)
+                label.form-check-label(for="st1") Hoạt động
+              .form-check
+                input.form-check-input(type="radio", name="status", id="st2", value="inactive")
+                label.form-check-label(for="st2") Ngưng hoạt động
+
+          //- Thumbnail
+          .col-12(upload-images)
+            label.form-label(for="image") Ảnh sản phẩm
+            input#image.form-control(type="file" name="image" accept="image/*" upload-images-input)
+  
+            //- Khung chứa ảnh và nút X
+            div.position-relative.d-inline-block.mt-2(style="width:150px")
+              img(
+                src=""
+                upload-images-review
+                style="width:150px; border:1px solid #868585ff; border-radius:8px;"
+              )
+              //- Nút X
+              span.position-absolute.d-none.top-0.end-0.bg-danger.text-white.rounded-circle.px-2(style="cursor:pointer" close-image) X
+
+          //- Description
+          .col-12
+            label.form-label(for="description") Mô tả
+            textarea#description.form-control(name="description" rows="4" placeholder="Nhập mô tả sản phẩm" class="textareamce" )
+
+        hr
+        .mt-4.d-flex.gap-2.mb-4
+          button.btn.btn-primary(type="submit") Lưu danh mục
+          a.btn.btn-outline-secondary(href="categories.html") Huỷ
