@@ -53,11 +53,8 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 routeAdmin(app)
 route(app)
 
-
 // === [DEFINE STATIC  ] === 
 app.use(express.static(`${__dirname}/public`));
-
-
 
 app.listen(port, () => {
   console.log("Connect Success!!")

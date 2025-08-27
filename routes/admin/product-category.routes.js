@@ -26,4 +26,5 @@ router.post("/create",
     },
     controller.postCategory);
 router.patch("/change-status/:status/:id",controller.changeStatus)
+router.patch("/change-multi",controller.changeMultiCate);
 module.exports = router;

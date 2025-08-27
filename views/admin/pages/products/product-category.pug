@@ -3,6 +3,7 @@ include ../../mixins/show-alert.pug
 include ../../mixins/fillterStatus.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
 
 block main 
   .container.mt-4
@@ -27,8 +28,6 @@ block main
            <select id="sort" name="sort" class="form-select form-select-sm" style="min-width: 220px;" sort-select>
              <option option-sort value="position-desc" >Vị trí giảm dần</option>
              <option option-sort value="position-asc">Vị trí tăng dần</option>
-             <option option-sort value="price-desc"    >Giá giảm dần</option>
-             <option option-sort value="price-asc"  >Giá tăng dần</option>
              <option option-sort value="title-asc"      >Tên A → Z</option>
              <option option-sort value="title-desc"     >Tên Z → A</option>
            </select>
@@ -36,14 +35,17 @@ block main
 
        .d-flex.justify-content-between.align-items-center.mb-3
          h1.h4.mb-0 Quản lý danh mục
+         +form-change-multi(`${prefixAdmin}/category/change-multi?_method=PATCH`)
         
  
        
  
        .table-responsive
-         table.table.table-hover.align-middle
-           thead.table-light
+         table.table.table-hover.align-middle(checkbox-multi)
+           thead.table-dark
              tr
+               th 
+                input(type="checkbox" name="checkall")  
                th Tên
                th Slug
                th Danh mục cha
@@ -53,6 +55,8 @@ block main
            tbody
              each item in category
               tr
+                td  
+                  input(type="checkbox" name="id" value=item.id)
                 td
                   strong #{item.title}
                   div.text-muted.small !{item.description}
