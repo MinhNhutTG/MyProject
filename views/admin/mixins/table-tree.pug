@@ -1,0 +1,33 @@
+mixin table-tree(category , level=1)
+  each item,index in category
+    - const prefix = Array(level + 1).join("-- ");
+    tr
+
+      td  
+        input(type="checkbox" name="id" value=item._id)
+      
+      td
+        strong  #{prefix}#{item.title}
+        div.text-muted.small !{item.description}
+      td code dien-thoai
+      td —
+      td 
+        input(
+          style="width: 70px"
+          type="number"
+          min="1"
+          value=`${item.position}`
+          name="position"
+        )
+      td 
+        if (item.status == "active")
+          span.badge.bg-success(btn-changeStatus data-id=`${item._id}` data="active") Đang hoạt động
+        else 
+          span.badge.bg-danger(btn-changeStatus data-id=`${item._id}` data="inactive") Ngừng hoạt động
+      td.text-end
+        .btn-group
+          a.btn.btn-sm.btn-outline-secondary(href="form.html") Sửa
+          button.btn.btn-sm.btn-outline-info Xem
+          button.btn.btn-sm.btn-outline-danger Xoá
+    if item.children && item.children.length > 0
+            +table-tree(item.children , level + 1)

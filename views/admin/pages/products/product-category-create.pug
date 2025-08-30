@@ -1,4 +1,7 @@
 extends ../../layouts/default.pug
+include ../../mixins/select-tree.pug
+
+
 
 block main
     .container.mt-5
@@ -21,11 +24,13 @@ block main
           //- Parent
           .col-md-6
             label.form-label(for="parent_id") Danh mục cha
-            input#parent_id.form-control(type="text", placeholder="Danh mục cha" name="parent_id")
-            //- select#parent_id.form-select(name="parent_id")
-            //-   option(value="") — Không có —
-            //-   option(value="1") Điện thoại
-            //-   option(value="2") Laptop
+            //- input#parent_id.form-control(type="text", placeholder="Danh mục cha" name="parent_id")
+            select#parent_id.form-select(name="parent_id")
+              option(value="") — Không có —
+              if (Records)
+                +select-tree(Records)
+                
+              
 
           //- Position
           .col-md-3
@@ -62,7 +67,7 @@ block main
           .col-12
             label.form-label(for="description") Mô tả
             textarea#description.form-control(name="description" rows="4" placeholder="Nhập mô tả sản phẩm" class="textareamce" )
-            textarea#description.form-control(name="description" rows="4" placeholder="Nhập mô tả sản phẩm" class="" )
+          
 
         hr
         .mt-4.d-flex.gap-2.mb-4
