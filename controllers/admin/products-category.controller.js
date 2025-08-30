@@ -3,16 +3,20 @@ const Category = require("../../models/category.model");
 const helperFillterStatus = require("../../helpers/fillterStatus");
 const helperPagination = require("../../helpers/pagination");
 const helperSearch = require("../../helpers/search");
+const helperCreateTree = require("../../helpers/create-tree");
 const flash = require("express-flash");
 
 // ===== [[ GET // CONTROLLER CATEGORY]] 
 module.exports.index = async (req, res) => {
+
 
     const fillterStatus = helperFillterStatus(req.query);
 
     let find = {
         deleted: false,
     }
+
+
 
     const totalProduct = await Category.countDocuments(find)
 
@@ -25,7 +29,7 @@ module.exports.index = async (req, res) => {
         req.query
     )
 
-    if (req.query.status){
+    if (req.query.status) {
         find.status = req.query.status;
     }
 
@@ -37,18 +41,19 @@ module.exports.index = async (req, res) => {
 
     let sort = {};
 
-    if (req.query.keysort && req.query.valuesort){
+    if (req.query.keysort && req.query.valuesort) {
         sort[req.query.keysort] = req.query.valuesort;
     }
-    else{
+    else {
         sort.position = "desc";
     }
 
-
+    
 
     const category = await Category.find(find).sort(sort).limit(objectPagination.litmitProduct).skip(objectPagination.skip);
+    const newRecords = helperCreateTree.tree(category);
     res.render("./admin/pages/products/product-category.pug", {
-        category: category,
+        category: newRecords,
         fillerButton: fillterStatus,
         pagination: objectPagination,
         keyword: objectSearch.keyword,
@@ -56,8 +61,18 @@ module.exports.index = async (req, res) => {
 }
 
 // ===== [[ GET // CONTROLLER CREATE]] 
-module.exports.create = (req, res) => {
-    res.render("./admin/pages/products/product-category-create.pug");
+module.exports.create = async (req, res) => {
+    let find = {
+        deleted: false,
+    }
+    
+    const Records = await Category.find(find);
+
+    const newRecords = helperCreateTree.tree(Records);
+
+    res.render("./admin/pages/products/product-category-create.pug", {
+        Records: newRecords,
+    });
 }
 
 
@@ -80,7 +95,7 @@ module.exports.changeStatus = async (req, res) => {
 }
 
 // [[CHANGE MULTI]]
-module.exports.changeMultiCate = async (req,res)=>{
+module.exports.changeMultiCate = async (req, res) => {
     const type = req.body.type;
     const ids = req.body.ids.split(", ");
     switch (type) {

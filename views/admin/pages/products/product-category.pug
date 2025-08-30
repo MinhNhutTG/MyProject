@@ -4,6 +4,7 @@ include ../../mixins/fillterStatus.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
+include ../../mixins/table-tree.pug
 
 block main 
   .container.mt-4
@@ -37,15 +38,13 @@ block main
          h1.h4.mb-0 Quản lý danh mục
          +form-change-multi(`${prefixAdmin}/category/change-multi?_method=PATCH`)
         
- 
-       
- 
        .table-responsive
          table.table.table-hover.align-middle(checkbox-multi)
            thead.table-dark
              tr
                th 
                 input(type="checkbox" name="checkall")  
+               
                th Tên
                th Slug
                th Danh mục cha
@@ -53,33 +52,7 @@ block main
                th Trạng thái
                th.text-end Hành động
            tbody
-             each item in category
-              tr
-                td  
-                  input(type="checkbox" name="id" value=item.id)
-                td
-                  strong #{item.title}
-                  div.text-muted.small !{item.description}
-                td code dien-thoai
-                td —
-                td 
-                  input(
-                    style="width: 70px"
-                    type="number"
-                    min="1"
-                    value=`${item.position}`
-                    name="position"
-                  )
-                td 
-                  if (item.status == "active")
-                    span.badge.bg-success(btn-changeStatus data-id=`${item._id}` data="active") Đang hoạt động
-                  else 
-                    span.badge.bg-danger(btn-changeStatus data-id=`${item._id}` data="inactive") Ngừng hoạt động
-                td.text-end
-                  .btn-group
-                    a.btn.btn-sm.btn-outline-secondary(href="form.html") Sửa
-                    button.btn.btn-sm.btn-outline-info Xem
-                    button.btn.btn-sm.btn-outline-danger Xoá
+             +table-tree(category)
        +pagination(pagination)
        form(
           action="",

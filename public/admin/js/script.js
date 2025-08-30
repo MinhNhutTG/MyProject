@@ -146,7 +146,6 @@ if (formChangeMulti) {
             }
         }
 
-
         if (inputsChecked.length > 0) {
             let ids = [];
 
@@ -165,7 +164,6 @@ if (formChangeMulti) {
             })
 
             inputIds.value = ids.join(", ")
-            console.log(inputIds.value)
             formChangeMulti.submit();
         }
         else {
