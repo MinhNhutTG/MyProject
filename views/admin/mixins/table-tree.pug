@@ -26,8 +26,9 @@ mixin table-tree(category , level=1)
           span.badge.bg-danger(btn-changeStatus data-id=`${item._id}` data="inactive") Ngừng hoạt động
       td.text-end
         .btn-group
-          a.btn.btn-sm.btn-outline-secondary(href="form.html") Sửa
-          button.btn.btn-sm.btn-outline-info Xem
-          button.btn.btn-sm.btn-outline-danger Xoá
+          a.btn.btn-sm.btn-outline-secondary(href=`${prefixAdmin}/category/edit/${item._id}`) Sửa
+          a.btn.btn-sm.btn-outline-info Xem
+          a.btn.btn-sm.btn-outline-danger(data-delete=item._id btn-delete) Xoá
     if item.children && item.children.length > 0
             +table-tree(item.children , level + 1)
+    
