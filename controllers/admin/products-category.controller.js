@@ -167,3 +167,14 @@ module.exports.delete = async(req,res)=>{
     req.flash("success","Xóa thành công");
     res.redirect(`${config.prefixAdmin}/category`)
 }
+
+// [[CONTROLLER DETAIL]]
+module.exports.detail = async (req,res)=>{
+
+    const id = req.params.id;
+
+    const category = await Category.findOne({_id: id},{delete:false});
+    res.render("./admin/pages/products/product-category-detail.pug",{
+        category:category
+    })
+}

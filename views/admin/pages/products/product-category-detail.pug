@@ -1,0 +1,37 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.mt-5
+    .row.justify-content-center
+      .col-md-8
+        .card.shadow-lg.rounded-3
+          .card-header.bg-primary.text-white
+            h4.mb-0 Thông tin chi tiết danh mục
+          .card-body
+            .mb-3.text-center
+              if category.thumbnail
+                img(src=category.thumbnail alt=category.name class="img-fluid rounded" style="max-height:200px;")
+              else
+                img(src="/images/no-image.png" alt="No Image" class="img-fluid rounded" style="max-height:200px;")
+            dl.row
+              dt.col-sm-4 Tên danh mục:
+              dd.col-sm-8 #{category.title}
+
+              dt.col-sm-4 Mô tả:
+              
+              dd.col-sm-8 
+                textarea#description.form-control(name="description" rows="4" placeholder="Nhập mô tả sản phẩm" class="textareamce" ) #{category.description}
+
+              dt.col-sm-4 Trạng thái:
+              dd.col-sm-8 
+                if category.status == "active"
+                  span.badge.bg-success Hoạt động
+                else
+                  span.badge.bg-secondary Không hoạt động
+
+              dt.col-sm-4 Ngày tạo:
+              dd.col-sm-8 #{category.createdAt}
+
+          .card-footer.text-end
+            a.btn.btn-outline-secondary(href="/admin/category") ← Quay lại
+            a.btn.btn-warning.ms-2(href=`/admin/category/edit/${category._id}`) ✎ Sửa

@@ -114,4 +114,37 @@ if (formChangeMulti) {
         }
 
     })
+}  
+
+
+
+
+const select = document.querySelector("[sort-select]");
+const buttonClear = document.querySelector("[btn-reset]");
+if (select) {
+    const url = new URL(window.location.href);
+    select.addEventListener("change", (e) => {
+        const valueOption = e.target.value;
+        const [keysort, valuesort] = valueOption.split("-");
+        url.searchParams.set("keysort", keysort);
+        url.searchParams.set("valuesort", valuesort);
+        window.location.href = url;
+    })
+
+    buttonClear.addEventListener("click", () => {
+        url.searchParams.delete("keysort");
+        url.searchParams.delete("valuesort");
+        window.location.href = url;
+    })
+
+
+    const keysort = url.searchParams.get("keysort");
+    const valuesort = url.searchParams.get("valuesort");
+    const keyvalue = `${keysort}-${valuesort}`;
+    const options = document.querySelectorAll("[option-sort]");
+    options.forEach((item) => {
+        if (item.value == keyvalue) {
+            item.setAttribute("selected", true);
+        }
+    })
 }

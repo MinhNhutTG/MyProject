@@ -93,5 +93,3 @@ spanCloseImage.addEventListener("click", () => {
     spanCloseImage.classList.add("d-none");
 })
 
-
-

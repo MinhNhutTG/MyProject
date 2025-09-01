@@ -27,7 +27,7 @@ mixin table-tree(category , level=1)
       td.text-end
         .btn-group
           a.btn.btn-sm.btn-outline-secondary(href=`${prefixAdmin}/category/edit/${item._id}`) Sửa
-          a.btn.btn-sm.btn-outline-info Xem
+          a.btn.btn-sm.btn-outline-info(href=`${prefixAdmin}/category/detail/${item._id}`) Xem
           a.btn.btn-sm.btn-outline-danger(data-delete=item._id btn-delete) Xoá
     if item.children && item.children.length > 0
             +table-tree(item.children , level + 1)

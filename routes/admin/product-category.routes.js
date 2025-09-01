@@ -43,4 +43,5 @@ router.patch("/edit/:id", upload.single('image'),
     }
     , productValidate.validatePost, controller.editPost);
 router.delete("/delete/:id",controller.delete);
+router.get("/detail/:id",controller.detail);
 module.exports = router;
