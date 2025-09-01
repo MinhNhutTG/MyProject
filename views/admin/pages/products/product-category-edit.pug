@@ -1,0 +1,101 @@
+extends ../../layouts/default.pug 
+include ../../mixins/select-tree.pug
+include ../../mixins/show-alert.pug
+block main 
+  .container.mt-5
+      +showAlert-error(3000)
+      .d-flex.justify-content-between.align-items-center.mb-4
+        h1.h4.mb-0 Sửa danh mục 
+        a.btn.btn-outline-secondary(href="/admin/category") ← Quay lại
+
+      form(action=`${prefixAdmin}/category/edit/${data._id}?_method=PATCH` method="POST"  enctype="multipart/form-data" id="form-edit")
+        .row.g-3
+          //- Title
+          .col-md-6
+            label.form-label(for="title") Tên danh mục *
+            input#title.form-control(type="text", placeholder="Ví dụ: Điện thoại" name="title" value=data.title ) 
+
+          //- Slug
+          .col-md-6
+            label.form-label(for="slug") Slug
+            input#slug.form-control(type="text", placeholder="dien-thoai" name="slug" value=data.slug) 
+
+          //- Parent
+          .col-md-6
+            label.form-label(for="parent_id") Danh mục cha
+            //- input#parent_id.form-control(type="text", placeholder="Danh mục cha" name="parent_id")
+            select#parent_id.form-select(name="parent_id" d)  
+              option(value="") — Không có —
+              if (Category)
+                +select-tree(Category,1,data.parent_id)
+
+          //- Position
+          .col-md-3
+            label.form-label(for="position") Thứ tự
+            input#position.form-control(type="number", min="0", value=data.position ,name="position")
+
+          //- Status
+          .col-md-3
+            label.form-label Trạng thái
+            .d-flex.gap-3
+              .form-check
+                input.form-check-input(type="radio", name="status", id="st1", value="active", checked=(data.status == "active" ? true : false))
+                label.form-check-label(for="st1") Hoạt động
+              .form-check
+                input.form-check-input(type="radio", name="status", id="st2", value="inactive" checked=(data.status == "inactive" ? true : false))
+                label.form-check-label(for="st2") Ngưng hoạt động
+
+          //- Thumbnail
+          .mb-3(upload-images)
+            label.form-label(for="image") Ảnh sản phẩm
+            input#image.form-control(type="file" name="image" accept="image/*" upload-images-input-edit)
+  
+            //- Khung chứa ảnh và nút X
+            div.position-relative.d-inline-block.mt-2(style="width:150px")
+              img(
+                src=`${data.thumbnail}`
+                upload-images-review-edit
+                style="width:150px; border:1px solid #868585ff; border-radius:8px;"
+              )
+              //- Nút X
+              span.position-absolute.d-none.top-0.end-0.bg-danger.text-white.rounded-circle.px-2(style="cursor:pointer" close-image-edit) X
+
+          //- Description
+          .col-12
+            label.form-label(for="description") Mô tả
+            textarea#description.form-control(name="description" rows="4" placeholder="Nhập mô tả sản phẩm" class="textareamce" ) !{data.description}
+          
+
+        hr
+        .mt-4.d-flex.gap-2.mb-4
+          button.btn.btn-primary(type="submit") Lưu danh mục
+          a.btn.btn-outline-secondary(href="categories.html") Huỷ
+  script.
+    const uploadImage = document.querySelector("#form-edit");
+    const  uploadImageInput = document.querySelector("[upload-images-input-edit]");
+    const uploadImageReview = document.querySelector("[upload-images-review-edit]");
+    let spanCloseImage = document.querySelector("[close-image-edit]");
+
+    if (uploadImageReview.src != "" || uploadImageInput.src != null){
+          spanCloseImage.classList.remove("d-none");
+          spanCloseImage.classList.add("d-block");
+    }
+
+    if (uploadImage){
+        uploadImageInput.addEventListener("change",(e)=>{
+            const file = e.target.files[0];
+            if (file){
+                uploadImageReview.src = "";
+                uploadImageReview.src = URL.createObjectURL(file);
+                spanCloseImage.classList.remove("d-none");
+                spanCloseImage.classList.add("d-block");
+            }
+        })
+    }
+
+    spanCloseImage.addEventListener("click",()=>{
+        uploadImageReview.src = ""
+        spanCloseImage.classList.remove("d-block");
+        spanCloseImage.classList.add("d-none");
+        uploadImageInput.value=""
+    })

@@ -1,10 +1,12 @@
 
 const Category = require("../../models/category.model");
+const config = require("../../config/systemconfig")
 const helperFillterStatus = require("../../helpers/fillterStatus");
 const helperPagination = require("../../helpers/pagination");
 const helperSearch = require("../../helpers/search");
 const helperCreateTree = require("../../helpers/create-tree");
 const flash = require("express-flash");
+const { render } = require("pug");
 
 // ===== [[ GET // CONTROLLER CATEGORY]] 
 module.exports.index = async (req, res) => {
@@ -15,8 +17,6 @@ module.exports.index = async (req, res) => {
     let find = {
         deleted: false,
     }
-
-
 
     const totalProduct = await Category.countDocuments(find)
 
@@ -128,4 +128,53 @@ module.exports.changeMultiCate = async (req, res) => {
 
     }
     res.redirect(req.get('Referer') || '/');
+}
+
+// [[CONTROLLER EDIT PAGE]]
+module.exports.edit = async(req,res)=>{
+
+    const id = req.params.id;
+
+    const data = await Category.findOne({deleted:false,_id:id});
+
+    const record = await Category.find({deleted:false});
+
+    const newRecords = helperCreateTree.tree(record);
+
+    res.render("./admin/pages/products/product-category-edit.pug",
+        { 
+        Category:newRecords,
+        data:data
+        }
+    );
+}
+
+// [[CONTROLLER EDIT POST]]
+module.exports.editPost = async (req,res)=>{
+    await Category.updateOne({_id: req.params.id},req.body);
+    req.flash("success","Cập nhật danh mục thành công");
+    res.redirect(`${config.prefixAdmin}/category`);
+}
+
+// [[CONTROLER DELETE]]
+module.exports.delete = async(req,res)=>{
+    const id = req.params.id;
+
+    await Category.updateOne({_id:id},{
+        deleted: true,
+        deleteAt: new Date().toLocaleString()
+    })
+    req.flash("success","Xóa thành công");
+    res.redirect(`${config.prefixAdmin}/category`)
+}
+
+// [[CONTROLLER DETAIL]]
+module.exports.detail = async (req,res)=>{
+
+    const id = req.params.id;
+
+    const category = await Category.findOne({_id: id},{delete:false});
+    res.render("./admin/pages/products/product-category-detail.pug",{
+        category:category
+    })
 }
