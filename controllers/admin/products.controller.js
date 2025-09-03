@@ -1,7 +1,9 @@
 // [GET] admin/products
 const config = require("../../config/systemconfig")
 const Product = require("../../models/product.model");
+const Category = require("../../models/category.model");
 const helperFillterStatus = require("../../helpers/fillterStatus");
+const helperCreateTree = require("../../helpers/create-tree");
 const helperSearch = require("../../helpers/search");
 const helperPagination = require("../../helpers/pagination");
 const pagination = require("../../helpers/pagination");
@@ -150,8 +152,13 @@ module.exports.restore = async (req, res) => {
 
 
 // ========= [[CONTROLLER CREATE PRODUCT INDEX]]========
-module.exports.create = (req, res) => {
-    res.render('./admin/pages/products/create.pug');
+module.exports.create = async (req, res) => {
+
+    const category = await Category.find({deleted:false});
+    const newCategory = helperCreateTree.tree(category)
+    res.render('./admin/pages/products/create.pug',{
+        category:newCategory
+    });
 }
 
 
@@ -170,6 +177,8 @@ module.exports.createPost = async (req, res) => {
     else {
         req.body.position = Number(req.body.position);
     }
+    
+    console.log(req.body.parent_category_id)
   
     const product = new Product(req.body);
 
@@ -188,10 +197,15 @@ module.exports.edit = async (req, res) => {
         deleted: false,
         _id: req.params.id
     }
-    const productfind = await Product.findOne(find);
+    const data = await Product.findOne(find);
+    console.log(data)
 
+    const category = await Category.find({deleted:false});
+    const newCategory = helperCreateTree.tree(category)
+    console.log(newCategory)
     res.render("./admin/pages/products/edit.pug", {
-        product: productfind
+        product: data,
+        category:newCategory
     }
     );
 }
