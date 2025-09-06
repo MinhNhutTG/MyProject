@@ -1,0 +1,18 @@
+extends ../../layouts/default.pug 
+block main 
+  .container.mt-5
+      
+      h4.mb-4 Chỉnh sửa Nhóm quyền
+
+      form(action=`${prefixAdmin}/roles/edit/${role._id}?_method=PATCH` method="POST"  )
+        .mb-3
+          label.form-label(for="title") Tên nhóm quyền
+          input#name.form-control(type="text" name="title" value=role.title required)
+
+        .mb-3
+          label.form-label(for="description") Mô tả ngắn
+          textarea#description.form-control(name="description" rows="3") #{role.description}
+       
+        .d-flex.gap-2
+          button.btn.btn-success(type="submit") Cập nhật
+          a.btn.btn-secondary(href="/roles") Quay lại
