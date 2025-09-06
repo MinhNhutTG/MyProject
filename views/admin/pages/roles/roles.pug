@@ -1,0 +1,76 @@
+extends ../../layouts/default.pug 
+
+block main
+  .container.mt-4
+
+    h5.mt-3 Danh sách tài khoản
+
+    //- Nút thêm mới + avatar admin
+    .d-flex.justify-content-end.align-items-center.mb-3
+      
+      a.btn.btn-primary(href=`${prefixAdmin}/roles/create`) 
+        i.bi.bi-plus-lg.me-1
+        | Thêm mới
+
+    //- Ô tìm kiếm
+    .mb-3
+      input.form-control(type="text" placeholder="Tìm kiếm...")
+
+    //- Bảng danh sách
+    table.table.table-bordered.table-hover
+      thead.table-light
+        tr
+          th(style="width:50px")
+            input.form-check-input(type="checkbox")
+          th Nhóm quyền
+          th Mô tả ngắn
+      tbody
+        each item in record 
+         tr
+           td
+             input.form-check-input(type="checkbox")
+           td #{item.title}
+           td #{item.description}
+           td.text-center
+             // Nút xem
+             a.btn.btn-sm.btn-info.text-white.me-1(href=`${prefixAdmin}/roles/${item._id}`)
+               i.bi.bi-eye
+               |  Xem
+             // Nút sửa
+             a.btn.btn-sm.btn-warning.text-white.me-1(href=`${prefixAdmin}/roles/edit/${item._id}`)
+               i.bi.bi-pencil
+               |  Sửa
+             // Nút xóa
+             
+             a.btn.btn-sm.btn-danger(href="#" btn-delete-permission data-id=item._id )
+                 i.bi.bi-trash
+                 |  Xóa
+        
+
+    //- Phân trang
+    .d-flex.justify-content-between.align-items-center
+      nav
+        ul.pagination.mb-0
+          li.page-item.disabled
+            a.page-link(href="#") «
+          li.page-item.disabled
+            a.page-link(href="#") ‹
+          li.page-item.active
+            a.page-link(href="#") 1
+          li.page-item
+            a.page-link(href="#") ›
+          li.page-item
+            a.page-link(href="#") »
+      .d-flex.align-items-center
+        select.form-select.form-select-sm.w-auto
+          option 20
+          option 50
+          option 100
+        span.ms-2 1 - 2 / 2
+    form(
+          action="",
+          method="POST"
+          id="form-delete-permission"
+          data-path=`${prefixAdmin}/roles/delete` 
+        ) 
+    script(src="/admin/js/role.js") 
