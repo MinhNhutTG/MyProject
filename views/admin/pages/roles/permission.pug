@@ -1,0 +1,54 @@
+extends ../../layouts/default.pug
+include ../../mixins/show-alert.pug
+block main
+  .container.mt-5
+    +showAlert(3000) 
+   
+    h4.mb-4 Phân quyền nhóm
+    div(data-record=record)
+      
+    
+    table.table.table-bordered.align-middle#table-permission
+        thead.table-light
+          tr 
+            th(scope="col") Tính năng
+            each item in record 
+                th(scope="col" class="text-center") #{item.title}
+        tbody
+          tr(data-name="id")
+            td
+            each item in record 
+              td
+                input.form-check-input(type="text" value=item._id style="width:200px") 
+          tr.table-secondary
+            td(colspan="9") Danh mục sản phẩm
+          tr(data-name="product-category_view")
+            td Xem
+            each item in record 
+                td.text-center
+                  input.form-check-input(type="checkbox" name="admin[product][view]")
+          tr(data-name="product-category_add")
+            td Thêm mới
+            each item in record 
+                td.text-center
+                  input.form-check-input(type="checkbox" name="admin[product][create]")
+          tr(data-name="product-category_edit")
+            td Chỉnh sửa
+            each item in record 
+                td.text-center
+                  input.form-check-input(type="checkbox" name="admin[product][edit]")
+          tr(data-name="product-category_delete")
+            td Xóa 
+            each item in record 
+                td.text-center
+                  input.form-check-input(type="checkbox" name="admin[product][delete]")
+
+    .mt-3.text-end
+        button.btn.btn-primary#buttonSubmit(type="submit") Cập nhật
+    form(
+      method="POST"
+      action=`${prefixAdmin}/roles/permissions?_method=PATCH`
+      id="form-change-permission")  
+        div 
+          input(type="text" class="form-control" name="permission")
+    script(src="/admin/js/role.js") 
